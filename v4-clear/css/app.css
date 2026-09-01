@@ -1,0 +1,401 @@
+/* ==========================================================================
+   מרשם מאמנים — גרסה מופשטת
+   --------------------------------------------------------------------------
+   נבנה מעל igds.css. כל הצבעים דרך הטוקנים.
+
+   העיקרון: בדף הזה יש שלושה דברים בלבד — שם, תיבת חיפוש ושלושה מספרים.
+   כל מסגרת, כרטיס או עיטור שנוסף סביבם גדול מהם ונקרא כעומס. לכן
+   ההיררכיה כאן נשענת על ניגודי גודל ועל אוויר, ולא על משטחים:
+   הכותרת גדולה, השדה גדול, הנתונים קטנים ושקטים, וביניהם ריווח.
+   ========================================================================== */
+
+/* ==========================================================================
+   0. שלד העמוד
+   --------------------------------------------------------------------------
+   הפוטר נצמד לתחתית החלון גם כשהתוכן קצר ממנו — למשל לפני שבוצע חיפוש,
+   כשאזור התוצאות עדיין מוסתר. בלעדי זה נותר פס רקע ריק מתחתיו.
+   ========================================================================== */
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { flex: 1 0 auto; }
+
+.govfoot { margin-top: auto; }
+
+/* ==========================================================================
+   1. הפתיח
+   ========================================================================== */
+
+/* העניין הוויזואלי כאן הוא אטמוספרה ולא אלמנטים נוספים: זוהר כחול רך
+   בפינה, ודגם הנקודות של gov.il שנמוג לתוך הרקע. שניהם יושבים מאחורי
+   התוכן ולא מוסיפים לו פריטים — הניסיון הקודם, שהוסיף חותם, חותמת
+   וקו כפול, הפך את הדף לעמוס בלי להוסיף מידע. */
+.lede {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  padding-block: 68px 60px;
+  background:
+    radial-gradient(760px 300px at 92% -6%, #D7E7FD 0%, rgba(215, 231, 253, 0) 66%),
+    radial-gradient(620px 300px at 6% 104%, #E8F1FE 0%, rgba(232, 241, 254, 0) 70%),
+    linear-gradient(180deg, #F8FBFF 0%, var(--surface) 58%);
+}
+
+/* דגם הנקודות — החתימה הוויזואלית של gov.il.
+   ממוקם בקצה הפנימי (שמאל ב-RTL), שם אין טקסט, ונמוג במסכה כדי
+   שלא ייווצר גבול חד מול התוכן. */
+.lede::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -40px;
+  inset-inline-end: -50px;
+  width: 340px;
+  height: 320px;
+  background-image: radial-gradient(#9FB6D6 1.5px, transparent 1.5px);
+  background-size: 19px 19px;
+  opacity: .55;
+  /* נמוג אלכסונית פנימה — כך הדגם נקרא כמסגור של הפינה
+     ולא ככתם מרחף באמצע השטח הריק */
+  -webkit-mask-image: linear-gradient(215deg, #000 0%, rgba(0,0,0,.35) 45%, transparent 78%);
+          mask-image: linear-gradient(215deg, #000 0%, rgba(0,0,0,.35) 45%, transparent 78%);
+  pointer-events: none;
+}
+
+/* הרוחב מוגבל על האלמנטים עצמם ולא על המיכל, כדי שהכל יישאר מיושר
+   לקצה המיכל — כלומר לאותו קו שבו יושב שם המערכת בפס העליון.
+   הגבלת המיכל הייתה ממרכזת את הבלוק ושוברת את היישור הזה. */
+.lede__t {
+  margin: 0;
+  font-size: clamp(31px, 5vw, 54px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--ink-strong);
+}
+
+.lede__s {
+  margin: 14px 0 0;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 46ch;
+}
+
+/* ==========================================================================
+   2. החיפוש — שני מסלולים, סעיף 3.4
+   ========================================================================== */
+
+.q { margin-top: 34px; max-width: 760px; }
+
+/* בורר המסלולים — פקד מקטעים, קומפקטי יותר מלשוניות עם קו תחתון */
+.seg {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  margin-bottom: 20px;
+  background: var(--bg);
+  border-radius: 10px;
+}
+.seg__b {
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  transition: background .13s, color .13s;
+}
+.seg__b:hover { color: var(--ink-strong); }
+.seg__b[aria-selected="true"] {
+  background: var(--surface);
+  color: var(--ink-strong);
+  font-weight: 600;
+  box-shadow: var(--sh-1);
+}
+
+/* סוג המזהה */
+.kinds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 0;
+  border: 0;
+}
+.kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-pill);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color .13s, background .13s, color .13s;
+}
+.kind:hover { border-color: var(--blue); color: var(--ink-strong); }
+.kind input { accent-color: var(--blue); width: 16px; height: 16px; margin: 0; cursor: pointer; }
+.kind:has(input:checked) {
+  border-color: var(--blue);
+  background: var(--blue-l);
+  color: var(--ink-strong);
+  font-weight: 600;
+}
+.kind:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* שורת השדות */
+.q__row { display: flex; align-items: flex-end; gap: 10px; }
+
+.q__f { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 7px; }
+.q__f label { font-size: 13.5px; font-weight: 500; color: var(--ink-soft); }
+
+.q__f input {
+  width: 100%;
+  height: 54px;
+  font-size: 16px;
+  padding-inline: 16px;
+  border: 1.5px solid var(--line-2);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  transition: border-color .13s, box-shadow .13s;
+}
+.q__f input::placeholder { color: var(--muted); }
+.q__f input:hover { border-color: var(--ink-soft); }
+.q__f input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: var(--ring);
+}
+.q__f input[aria-invalid="true"] { border-color: var(--danger); }
+
+.q__go {
+  flex: none;
+  height: 54px;
+  padding-inline: 36px;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+.q__hint {
+  margin: 12px 0 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.q__err { margin: 8px 0 0; }
+.q__err:empty { display: none; }
+
+/* ==========================================================================
+   3. שורת הנתונים — שקטה במכוון
+   ========================================================================== */
+
+/* יושבת מתחת לתת־הכותרת ומעל החיפוש, כחלק מבלוק הזהות.
+   המרווח מעליה קטן מזה שמתחתיה, כדי שתיקרא כהמשך של ההסבר
+   ולא כבלוק עצמאי שמפריד בין הזהות לפעולה. */
+.figs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 26px;
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+.figs__i b {
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   4. תוצאות
+   ========================================================================== */
+
+.res { padding-block: 40px 56px; }
+
+.res__head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.res__head h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--ink-strong);
+}
+/* הכותרת מקבלת מיקוד אחרי חיפוש כדי שקורא מסך יוכרז על התוצאות.
+   היא אינה נגישה ב-Tab (tabindex="-1"), ולכן טבעת המיקוד רק נראית
+   כתקלה למשתמש רואה — ואין משתמש מקלדת שנפגע מהסרתה. */
+.res__head h2:focus { outline: none; }
+.res__count { margin: 0; font-size: 14px; color: var(--ink-soft); }
+.res__count strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* ---- צמצום התוצאות — שורה אחת, בלי כותרת ובלי מסגרת ---- */
+
+.nar {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.nar__f { flex: 1 1 170px; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.nar__f label { font-size: 12.5px; color: var(--muted); }
+.nar__f select, .nar__f input { height: 42px; }
+.nar__x { flex: none; height: 42px; }
+
+/* ---- כרטיס מאמן ---- */
+
+.coach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 14px;
+}
+
+.coach-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.coach-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.coach-card__name {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink-strong);
+}
+
+/* מזהה חלקי — להבחנה בין מאמנים בעלי שם זהה */
+.coach-card__id {
+  flex: none;
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.auth-list { margin: 0; padding: 0; display: grid; gap: 8px; }
+
+.auth-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14.5px;
+  color: var(--ink);
+}
+
+/* הדרגה נבדלת בצבע ובמשקל בלבד — תגית ממולאת סביב כל שורה
+   הופכת את הכרטיס לרועש, וכאן יש עד ארבע שורות כאלה */
+.rank-badge {
+  flex: none;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--tint-blue-t);
+}
+.rank-badge[data-rank="מאמן בכיר"]  { color: var(--tint-green-t); }
+
+.coach-card__count {
+  margin: 0;
+  padding-top: 11px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ---- Disclaimer — הערת שוליים, לא תיבת אזהרה ---- */
+
+.disc {
+  margin: 26px 0 0;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 90ch;
+}
+.disc__n { font-style: italic; }
+
+/* ---- מצב ריק ---- */
+
+.empty {
+  grid-column: 1 / -1;
+  padding: 44px 20px;
+  text-align: center;
+}
+.empty__ic { display: block; color: var(--line-2); margin-bottom: 10px; }
+.empty h3 { margin: 0 0 6px; font-size: 17px; color: var(--ink-strong); }
+.empty p { margin: 0 auto; max-width: 44ch; font-size: 14px; color: var(--ink-soft); }
+
+/* ==========================================================================
+   5. רספונסיביות
+   ========================================================================== */
+
+@media (max-width: 700px) {
+
+  /* תיקון לפס העליון של המערכת המשותפת: הוא בגובה קבוע ואינו נשבר,
+     ולכן במסך צר שם המערכת נדחס לעמודה צרה ונשבר לשלוש שורות.
+     "צור קשר" יורד מהפס — הוא קיים בכותרת התחתונה, והרוחב דרוש
+     לשם המערכת ולכפתור הרישום. */
+  .govbar .txtbtn { display: none; }
+  .brand-lock__wm { white-space: nowrap; }
+
+  .lede { padding-block: 36px 34px; }
+  .lede__s { font-size: 16px; margin-top: 11px; }
+
+  /* במסך צר הדגם משתרע מאחורי הכותרת ומרעיש אותה — מצטמצם לפינה */
+  .lede::before {
+    width: 190px; height: 170px;
+    top: -30px; inset-inline-end: -40px;
+    opacity: .4;
+  }
+
+  .q { margin-top: 26px; }
+  .q__row { flex-direction: column; align-items: stretch; }
+  .q__f input, .q__go { height: 50px; }
+  .q__f input { font-size: 16px; }   /* מתחת ל-16px iOS מזייף זום */
+  .q__go { margin-top: 4px; }
+
+  /* הבורר נמתח לרוחב מלא, שתי אפשרויות שוות */
+  .seg { display: flex; margin-bottom: 16px; }
+  .seg__b { flex: 1; padding-inline: 10px; text-align: center; }
+
+  .figs { margin-top: 13px; gap: 4px 18px; }
+
+  .nar__f { flex: 1 1 100%; }
+  .nar__x { align-self: flex-start; }
+}
+
+/* ==========================================================================
+   6. הדפסה
+   ========================================================================== */
+
+@media print {
+  .govbar, .q, .nar, .govfoot, .figs { display: none; }
+  .lede { border: 0; padding-block: 0 16px; }
+  .coach-card { break-inside: avoid; border: 1px solid #999; }
+}

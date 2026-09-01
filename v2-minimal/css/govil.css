@@ -1,0 +1,423 @@
+/* ==========================================================================
+   GOV.IL Design System — טוקנים ורכיבי בסיס
+   הערכים נדגמו מהאתר החי www.gov.il (יולי 2026):
+   טיפוגרפיה Rubik · טקסט #0c3058 · רקע עמוד #f1f7ff · פעולה #0068f5
+   ========================================================================== */
+
+:root {
+  /* ---- צבעים ---- */
+  --gov-navy:        #0c3058;  /* טקסט ראשי ורקע כהה */
+  --gov-navy-deep:   #0b2649;
+  --gov-navy-link:   #0b3668;
+  --gov-blue:        #0068f5;  /* צבע פעולה ראשי */
+  --gov-blue-bright: #007dfa;
+  --gov-blue-300:    #3386f7;
+  --gov-blue-hover:  #0055c9;
+  --gov-muted:       #496482;  /* טקסט משני */
+  --gov-muted-soft:  #5878a4;
+  --gov-border:      #bbbbcb;
+  --gov-border-soft: #dbe6f5;
+  --gov-page-bg:     #f1f7ff;
+  --gov-surface:     #ffffff;
+  --gov-surface-alt: #f7fbff;
+
+  /* מצבים */
+  --gov-error:       #c8102e;
+  --gov-error-bg:    #fdf0f2;
+  --gov-success:     #0a7c42;
+  --gov-success-bg:  #eef8f2;
+  --gov-warn-bg:     #fff8e6;
+  --gov-warn-border: #e0a800;
+
+  /* ---- טיפוגרפיה ---- */
+  --gov-font: "Rubik", "Assistant", "Arial Hebrew", "Segoe UI", Arial, sans-serif;
+  --gov-fs-base: 16px;
+
+  /* ---- מרווחים ורדיוסים ---- */
+  --gov-radius-sm: 6px;
+  --gov-radius:    8px;
+  --gov-radius-pill: 30px;
+  --gov-container: 1280px;
+
+  /* ---- צללים (נדגמו מ-gov.il) ---- */
+  --gov-shadow-card:   0 2px 7px 0 rgba(0, 0, 0, .08);
+  --gov-shadow-header: 0 8px 24px 0 rgba(0, 0, 0, .05);
+  --gov-shadow-raised: 0 4px 16px 0 rgba(12, 48, 88, .12);
+
+  --gov-focus: 3px solid #ff9d00;   /* טבעת מיקוד בניגודיות גבוהה */
+}
+
+/* ==========================================================================
+   איפוס ובסיס
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--gov-font);
+  font-size: var(--gov-fs-base);
+  line-height: 1.5;
+  color: var(--gov-navy);
+  background: var(--gov-page-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { margin: 0; color: var(--gov-navy); line-height: 1.2; font-weight: 700; }
+h1 { font-size: 2.125rem; }   /* 34px — כמו gov.il */
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+p  { margin: 0; }
+
+a {
+  color: var(--gov-navy-link);
+  font-weight: 700;
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+img, svg { max-width: 100%; }
+
+/* נגישות: טבעת מיקוד עקבית לכל אלמנט אינטראקטיבי */
+:focus-visible {
+  outline: var(--gov-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* טקסט לקוראי מסך בלבד */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* דילוג לתוכן — נחשף בפוקוס מקלדת */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  inset-inline-start: 16px;
+  z-index: 999;
+  background: var(--gov-surface);
+  color: var(--gov-navy);
+  padding: 12px 20px;
+  border-radius: 0 0 var(--gov-radius) var(--gov-radius);
+  box-shadow: var(--gov-shadow-raised);
+  transition: top .15s ease-out;
+}
+.skip-link:focus { top: 0; }
+
+.gov-container {
+  width: 100%;
+  max-width: var(--gov-container);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+/* ==========================================================================
+   כותרת עליונה
+   ========================================================================== */
+
+.gov-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--gov-navy);
+  box-shadow: var(--gov-shadow-header);
+}
+
+.gov-header__bar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 64px;
+}
+
+/* לוגו / חתימה ממשלתית */
+.gov-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+.gov-brand:hover { text-decoration: none; }
+.gov-brand__mark {
+  flex: none;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: var(--gov-radius-sm);
+  background: rgba(255, 255, 255, .12);
+}
+.gov-brand__text { display: flex; flex-direction: column; line-height: 1.15; }
+.gov-brand__title  { font-size: 1.0625rem; font-weight: 700; }
+.gov-brand__sub    { font-size: .75rem; font-weight: 400; color: #b9d0f0; }
+
+.gov-header__nav {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gov-navlink {
+  color: #fff;
+  font-weight: 400;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: var(--gov-radius-sm);
+  text-decoration: none;
+}
+.gov-navlink:hover { background: rgba(255, 255, 255, .12); text-decoration: none; }
+
+/* כפתור היפוך צבעים בסרגל הכהה */
+.gov-navlink--cta {
+  background: #fff;
+  color: var(--gov-navy);
+  font-weight: 700;
+  border-radius: var(--gov-radius-pill);
+  padding: 8px 20px;
+}
+.gov-navlink--cta:hover { background: #e6f0ff; text-decoration: none; }
+
+/* ==========================================================================
+   כותרות עמוד (Hero) — גרדיאנט הכחול של gov.il
+   ========================================================================== */
+
+.gov-hero {
+  background: linear-gradient(255deg, var(--gov-blue) 0%, #0a2f6b 55%, var(--gov-navy-deep) 100%);
+  color: #fff;
+  padding-block: 48px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.gov-hero h1 { color: #fff; }
+.gov-hero__lead {
+  margin-top: 12px;
+  max-width: 60ch;
+  font-size: 1.0625rem;
+  color: #cfe1fb;
+}
+
+/* דגם הנקודות הדקורטיבי של gov.il */
+.gov-hero::before {
+  content: "";
+  position: absolute;
+  inset-block-start: -40px;
+  inset-inline-start: -40px;
+  width: 260px; height: 260px;
+  background-image: radial-gradient(rgba(255, 255, 255, .28) 2px, transparent 2px);
+  background-size: 22px 22px;
+  opacity: .5;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   כרטיסים ומשטחים
+   ========================================================================== */
+
+.gov-card {
+  background: var(--gov-surface);
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow-card);
+  padding: 24px;
+}
+
+.gov-panel {
+  background: var(--gov-surface);
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow-raised);
+  padding: 28px;
+}
+
+/* ==========================================================================
+   טפסים
+   ========================================================================== */
+
+.gov-field { display: flex; flex-direction: column; gap: 6px; }
+
+.gov-label {
+  font-size: .9375rem;
+  font-weight: 700;
+  color: var(--gov-navy);
+}
+.gov-label .req { color: var(--gov-error); margin-inline-start: 2px; }
+
+.gov-hint { font-size: .8125rem; color: var(--gov-muted); font-weight: 400; }
+
+.gov-input,
+.gov-select {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--gov-navy);
+  background: var(--gov-surface);
+  border: 1px solid var(--gov-border);
+  border-radius: var(--gov-radius);
+  transition: border-color .15s, box-shadow .15s;
+}
+.gov-input::placeholder { color: #8596af; }
+.gov-input:hover, .gov-select:hover { border-color: var(--gov-muted); }
+.gov-input:focus, .gov-select:focus {
+  border-color: var(--gov-blue);
+  box-shadow: 0 0 0 3px rgba(0, 104, 245, .18);
+  outline: none;
+}
+.gov-input:focus-visible, .gov-select:focus-visible { outline: var(--gov-focus); outline-offset: 1px; }
+
+.gov-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%230c3058' d='M1.4 0 6 4.6 10.6 0 12 1.4 6 7.4 0 1.4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 16px center;
+  padding-inline-end: 16px;
+  padding-inline-start: 40px;
+  cursor: pointer;
+}
+
+/* מצב שגיאה */
+.gov-input[aria-invalid="true"] {
+  border-color: var(--gov-error);
+  background: var(--gov-error-bg);
+}
+.gov-input[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px rgba(200, 16, 46, .18);
+}
+
+.gov-error {
+  display: none;
+  font-size: .8125rem;
+  font-weight: 500;
+  color: var(--gov-error);
+}
+.gov-error::before { content: "⚠ "; }
+.gov-error.is-visible { display: block; }
+
+/* כפתורי רדיו */
+.gov-radio-group { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.gov-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid var(--gov-border);
+  border-radius: var(--gov-radius-pill);
+  background: var(--gov-surface);
+  cursor: pointer;
+  font-size: .9375rem;
+  transition: border-color .15s, background .15s;
+}
+.gov-radio:hover { border-color: var(--gov-blue); background: #f5f9ff; }
+.gov-radio input { accent-color: var(--gov-blue); width: 18px; height: 18px; margin: 0; cursor: pointer; }
+.gov-radio:has(input:checked) {
+  border-color: var(--gov-blue);
+  background: #eaf2ff;
+  font-weight: 700;
+}
+.gov-radio:has(input:focus-visible) { outline: var(--gov-focus); outline-offset: 2px; }
+
+/* ==========================================================================
+   כפתורים
+   ========================================================================== */
+
+.gov-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 32px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: var(--gov-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.gov-btn:hover { text-decoration: none; }
+
+.gov-btn--primary { background: var(--gov-blue); color: #fff; }
+.gov-btn--primary:hover { background: var(--gov-blue-hover); }
+
+.gov-btn--secondary {
+  background: transparent;
+  color: var(--gov-navy);
+  border-color: var(--gov-border);
+}
+.gov-btn--secondary:hover { border-color: var(--gov-navy); background: #f5f9ff; }
+
+.gov-btn--link {
+  height: auto; padding: 0;
+  background: none; border: none;
+  color: var(--gov-navy-link);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   התראות
+   ========================================================================== */
+
+.gov-alert {
+  display: flex;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: var(--gov-radius);
+  border-inline-start: 4px solid;
+  font-size: .9375rem;
+  line-height: 1.55;
+}
+.gov-alert__icon { flex: none; font-size: 1.125rem; line-height: 1.4; }
+.gov-alert--info    { background: #eaf2ff; border-color: var(--gov-blue); color: var(--gov-navy); }
+.gov-alert--notice  { background: var(--gov-warn-bg); border-color: var(--gov-warn-border); color: #5c4600; }
+.gov-alert--error   { background: var(--gov-error-bg); border-color: var(--gov-error); color: #7a0a1c; }
+
+/* ==========================================================================
+   כותרת תחתונה
+   ========================================================================== */
+
+.gov-footer {
+  margin-top: 64px;
+  background: var(--gov-navy);
+  color: #cfe1fb;
+  padding-block: 40px 28px;
+  font-size: .875rem;
+}
+.gov-footer a { color: #fff; font-weight: 400; }
+.gov-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, .15);
+}
+.gov-footer h3 { color: #fff; font-size: 1rem; margin-bottom: 12px; }
+.gov-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.gov-footer__bottom { padding-top: 20px; color: #9fbde3; }
+
+/* ==========================================================================
+   העדפות משתמש
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root { --gov-border: #495b78; --gov-muted: #33465f; }
+}

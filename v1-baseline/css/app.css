@@ -1,0 +1,250 @@
+/* ==========================================================================
+   מרשם מאמנים — סגנונות ייעודיים לאתר
+   נבנה מעל govil.css. אין כאן צבעים קשיחים — הכל דרך הטוקנים.
+   ========================================================================== */
+
+/* ==========================================================================
+   סטטיסטיקות סיכום (סעיף 3.3 + 3.6)
+   ========================================================================== */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.stat {
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: var(--gov-radius);
+  padding: 20px 24px;
+  backdrop-filter: blur(2px);
+}
+.stat__value {
+  display: block;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.stat__label {
+  display: block;
+  margin-top: 4px;
+  font-size: .9375rem;
+  color: #cfe1fb;
+}
+
+/* ==========================================================================
+   פאנל חיפוש (סעיף 3.4)
+   ========================================================================== */
+
+.search-panel {
+  margin-top: -36px;          /* חופף לגרדיאנט ההירו */
+  position: relative;
+  z-index: 2;
+}
+
+/* לשוניות מסלולי החיפוש */
+.tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--gov-border-soft);
+  margin-bottom: 24px;
+}
+
+.tab {
+  appearance: none;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  padding: 12px 20px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--gov-muted);
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.tab:hover { color: var(--gov-navy); }
+.tab[aria-selected="true"] {
+  color: var(--gov-blue);
+  border-bottom-color: var(--gov-blue);
+  font-weight: 700;
+}
+
+.tabpanel[hidden] { display: none; }
+
+/* פריסת שדות */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.search-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--gov-border-soft);
+}
+
+/* ==========================================================================
+   אזור התוצאות (סעיף 3.5)
+   ========================================================================== */
+
+.results { margin-top: 40px; }
+
+.results__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.results__count { font-size: .9375rem; color: var(--gov-muted); }
+.results__count strong { color: var(--gov-navy); font-variant-numeric: tabular-nums; }
+
+/* בר סינון — מוצג רק כשיש יותר מתוצאה אחת */
+.filter-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: end;
+  gap: 16px;
+  background: var(--gov-surface-alt);
+  border: 1px solid var(--gov-border-soft);
+  border-radius: var(--gov-radius);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+/* רשת כרטיסי המאמנים */
+.coach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.coach-card {
+  background: var(--gov-surface);
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow-card);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 4px solid var(--gov-blue);
+}
+
+.coach-card__name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gov-navy);
+}
+
+.coach-card__meta {
+  font-size: .8125rem;
+  color: var(--gov-muted);
+  margin-top: 2px;
+}
+
+/* רשימת הסמכות — כל הסמכה בשורה נפרדת */
+.auth-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.auth-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--gov-surface-alt);
+  border: 1px solid var(--gov-border-soft);
+  border-radius: var(--gov-radius-sm);
+  font-size: .9375rem;
+}
+.auth-item__sport { font-weight: 500; }
+
+.rank-badge {
+  flex: none;
+  padding: 3px 12px;
+  border-radius: var(--gov-radius-pill);
+  font-size: .8125rem;
+  font-weight: 700;
+  background: #eaf2ff;
+  color: var(--gov-navy-link);
+  border: 1px solid #c3daff;
+}
+/* גוונים לפי דרגה — הניגודיות של כולם עומדת ב-AA מול הרקע */
+.rank-badge[data-rank="מאמן בכיר"]  { background: #e8f4ec; color: #085c31; border-color: #b7ddc6; }
+
+/* ==========================================================================
+   מצבי ריק ותוצאות
+   ========================================================================== */
+
+.empty-state {
+  text-align: center;
+  padding: 56px 24px;
+  background: var(--gov-surface);
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow-card);
+}
+.empty-state__icon { font-size: 2.5rem; line-height: 1; }
+.empty-state h3 { margin: 16px 0 8px; }
+.empty-state p { color: var(--gov-muted); max-width: 46ch; margin-inline: auto; }
+
+/* ==========================================================================
+   רספונסיביות
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .stats { grid-template-columns: 1fr; gap: 12px; }
+  .stat { padding: 16px 20px; }
+  .stat__value { font-size: 1.75rem; }
+  .filter-bar { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 700px) {
+  h1 { font-size: 1.625rem; }
+  .field-row { grid-template-columns: 1fr; gap: 16px; }
+
+  /* הכותרת נשברת לשתי שורות: מיתוג למעלה, ניווט מתחת —
+     עדיף על דחיסת הכל לשורה אחת שגורמת לגלישת טקסט */
+  .gov-header__bar { flex-wrap: wrap; padding-block: 10px; gap: 10px; }
+  .gov-header__nav { margin-inline-start: 0; width: 100%; gap: 8px; }
+  .gov-navlink { white-space: nowrap; padding: 8px 12px; font-size: .875rem; }
+  .gov-navlink--cta { padding: 8px 16px; }
+  .gov-brand__title { font-size: 1rem; white-space: nowrap; }
+  .gov-brand__sub { display: none; }
+  .search-panel { margin-top: -20px; }
+  .gov-panel { padding: 20px; }
+  .search-actions { flex-direction: column; align-items: stretch; }
+  /* גלישה לשורה נוספת ולא גלילה אופקית —
+     overflow-x:auto היה מפעיל גם ציר אנכי ויוצר פס גלילה מדומה */
+  .tabs { flex-wrap: wrap; }
+  .tab { white-space: nowrap; padding: 12px 14px; }
+}
+
+/* ==========================================================================
+   הדפסה
+   ========================================================================== */
+
+@media print {
+  .gov-header, .search-panel, .filter-bar, .gov-footer { display: none; }
+  .coach-card { break-inside: avoid; box-shadow: none; border: 1px solid #999; }
+}
+
+/* הכותרת מקבלת מיקוד אחרי חיפוש כדי שקורא מסך יוכרז על התוצאות.
+   היא אינה נגישה ב-Tab (tabindex="-1"), ולכן טבעת המיקוד רק נראית
+   כתקלה למשתמש רואה — ואין משתמש מקלדת שנפגע מהסרתה. */
+#results-title:focus { outline: none; }

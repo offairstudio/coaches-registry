@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>מרשם המאמנים הלאומי | מדינת ישראל</title>
+  <meta name="description" content="חיפוש ואימות מאמנים הרשומים במרשם המאמנים הלאומי, בהתאם לחוק הספורט. השירות פתוח לציבור וללא צורך בהתחברות.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/govil.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">דילוג לתוכן המרכזי</a>
+
+  <!-- ======================================================================
+       כותרת עליונה — סעיף 3.2
+       הלוגו הרשמי מונח על משטח לבן: הסמל רב־הגוונים כולל ירוק כהה וסגול
+       שאינם קריאים על רקע כחול כהה.
+       ====================================================================== -->
+  <header class="gov-header">
+    <div class="gov-container gov-header__bar">
+
+      <a class="gov-brand" href="#" aria-label="מרשם המאמנים הלאומי — לדף הבית">
+        <span class="gov-brand__mark">
+          <img src="assets/ministry-logo.svg" alt="סמל משרד התרבות והספורט" width="26" height="30">
+        </span>
+        <span class="gov-brand__text">
+          <span class="gov-brand__title">מרשם המאמנים הלאומי</span>
+          <span class="gov-brand__sub">משרד התרבות והספורט</span>
+        </span>
+      </a>
+
+      <nav class="gov-header__nav" aria-label="ניווט ראשי">
+        <a class="gov-navlink" href="#">צור קשר</a>
+        <a class="gov-navlink gov-navlink--cta" href="#">לרישום מאמנ/ת</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ====================================================================
+         חלק עליון — כותרת, תיאור וסטטיסטיקות (סעיף 3.3)
+         ==================================================================== -->
+    <section class="gov-hero">
+      <div class="gov-container">
+        <h1>מרשם המאמנים הלאומי</h1>
+        <p class="gov-hero__lead">
+          כאן ניתן לבדוק אם מאמן רשום במרשם הלאומי ולצפות בהסמכות שברשותו — ענף הספורט והדרגה.
+          השירות פתוח לכלל הציבור, ללא צורך בהתחברות או ברישום.
+        </p>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat__value" id="stat-coaches">—</span>
+            <span class="stat__label">מאמנים רשומים</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="stat-sports">—</span>
+            <span class="stat__label">ענפי ספורט</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="stat-authorizations">—</span>
+            <span class="stat__label">הסמכות פעילות</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         פאנל חיפוש — שדה אחד לכל סוגי המזהים, וסינון באותו הכרטיס
+         ==================================================================== -->
+    <section class="gov-container search-panel" aria-labelledby="search-title">
+      <div class="gov-panel">
+
+        <h2 id="search-title">חיפוש מאמן</h2>
+
+        <form id="form-search" novalidate>
+          <div class="search-row">
+            <div class="gov-field search-field">
+
+              <span class="search-labelline">
+                <label class="gov-label" for="q">שם, תעודת זהות, טלפון או דואר אלקטרוני</label>
+                <span class="detect-chip" id="detect-chip" hidden></span>
+              </span>
+
+              <input class="gov-input" type="text" id="q" name="q"
+                     autocomplete="off" enterkeyhint="search"
+                     placeholder="לדוגמה: דוד כהן"
+                     aria-describedby="q-hint q-error">
+
+              <span class="gov-hint" id="q-hint">
+                המערכת מזהה אוטומטית את סוג הערך שהוזן. חיפוש לפי שם מאתר גם התאמה חלקית.
+              </span>
+              <span class="gov-error" id="q-error" role="alert"></span>
+
+            </div>
+
+            <button class="gov-btn gov-btn--primary search-submit" type="submit">חיפוש</button>
+          </div>
+        </form>
+
+        <!-- סינון — מוצג באותו כרטיס, רק כשיש יותר מתוצאה אחת (סעיף 3.5.2) -->
+        <div class="filter-row" id="filter-bar" hidden>
+          <span class="filter-row__title" id="filter-title">צמצום התוצאות</span>
+          <div class="gov-field filter-field">
+            <label class="gov-label" for="filter-sport">ענף ספורט</label>
+            <select class="gov-select" id="filter-sport">
+              <option value="">כל הענפים</option>
+            </select>
+          </div>
+          <div class="gov-field filter-field">
+            <label class="gov-label" for="filter-rank">דרגת הסמכה</label>
+            <select class="gov-select" id="filter-rank">
+              <option value="">כל הדרגות</option>
+            </select>
+          </div>
+          <button class="gov-btn gov-btn--ghost" type="button" id="filter-clear">ניקוי</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         תוצאות — סעיף 3.5
+         ==================================================================== -->
+    <section class="gov-container results" id="results" aria-labelledby="results-title" hidden>
+
+      <div class="results__head">
+        <h2 id="results-title" tabindex="-1">תוצאות החיפוש</h2>
+        <p class="results__count" id="results-count"></p>
+      </div>
+
+      <!-- הכרזה לקורא מסך על שינוי בתוצאות -->
+      <p class="sr-only" id="results-status" role="status" aria-live="polite"></p>
+
+      <!-- Disclaimer — הנוסח הסופי יסופק על ידי הלשכה המשפטית -->
+      <p class="disclaimer" id="disclaimer">
+        המידע במרשם משקף את נתוני ההסמכה כפי שנרשמו במועד הפקת התצוגה, ואינו מהווה אישור
+        על כשירותו של המאמן לפעילות מסוימת. <span class="disclaimer__note">נוסח סופי יימסר על ידי הלשכה המשפטית.</span>
+      </p>
+
+      <div class="coach-grid" id="results-grid"></div>
+
+    </section>
+
+  </main>
+
+  <!-- ======================================================================
+       כותרת תחתונה
+       ====================================================================== -->
+  <footer class="gov-footer">
+    <div class="gov-container">
+      <div class="gov-footer__grid">
+
+        <div>
+          <h3>אודות המרשם</h3>
+          <ul>
+            <li><a href="#">על מרשם המאמנים</a></li>
+            <li><a href="#">חוק הספורט</a></li>
+            <li><a href="#">תנאי רישום והסמכה</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>שירותים למאמנים</h3>
+          <ul>
+            <li><a href="#">רישום למרשם</a></li>
+            <li><a href="#">עדכון פרטים</a></li>
+            <li><a href="#">חידוש רישיון</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>עזרה ותמיכה</h3>
+          <ul>
+            <li><a href="#">צור קשר</a></li>
+            <li><a href="#">שאלות נפוצות</a></li>
+            <li><a href="#">הצהרת נגישות</a></li>
+            <li><a href="#">מדיניות פרטיות</a></li>
+          </ul>
+        </div>
+
+      </div>
+      <p class="gov-footer__bottom">
+        © מדינת ישראל — משרד התרבות והספורט. המידע באתר ניתן לצפייה בלבד.
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

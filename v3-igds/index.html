@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>מרשם המאמנים הלאומי | מדינת ישראל</title>
+  <meta name="description" content="חיפוש ואימות מאמנים הרשומים במרשם המאמנים הלאומי, בהתאם לחוק הספורט. השירות פתוח לציבור וללא צורך בהתחברות.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/igds.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">דילוג לתוכן המרכזי</a>
+
+  <!-- ======================================================================
+       כותרת עליונה — סעיף 3.2
+       נעילת המיתוג של gov.il: סמל · קו מפריד · שם המערכת ומשרד האם.
+       הסמל רב־הגוונים מונח על משטח לבן — הירוק והסגול שבו אינם קריאים
+       על רקע כחול כהה.
+       ====================================================================== -->
+  <header class="govbar">
+    <div class="govbar__inner">
+
+      <a class="brand-lock" href="#" aria-label="מרשם המאמנים הלאומי — לדף הבית">
+        <span class="brand-lock__emblem">
+          <img src="assets/ministry-logo.svg" alt="סמל משרד התרבות והספורט" width="26" height="30">
+        </span>
+        <span class="brand-lock__div" aria-hidden="true"></span>
+        <span class="brand-lock__tx">
+          <span class="brand-lock__wm">מרשם המאמנים הלאומי</span>
+          <span class="brand-lock__sub">משרד התרבות והספורט</span>
+        </span>
+      </a>
+
+      <nav class="govbar__nav" aria-label="ניווט ראשי">
+        <a class="txtbtn" href="#" data-icon="mail">צור קשר</a>
+        <a class="btn btn-out btn-sm" href="#">לרישום מאמנ/ת</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ====================================================================
+         כותרת, הסבר וסטטיסטיקות — סעיפים 3.3 ו-3.6
+         ==================================================================== -->
+    <section class="hero">
+      <div class="container">
+
+        <p class="hero__kicker" data-icon="shield">שירות מקוון · פתוח לכלל הציבור</p>
+
+        <h1 class="title">מרשם המאמנים הלאומי</h1>
+
+        <p class="lead">
+          כאן ניתן לבדוק אם מאמן רשום במרשם הלאומי ולצפות בהסמכות שברשותו — ענף הספורט והדרגה.
+          השירות פתוח לכלל הציבור, ללא צורך בהתחברות או ברישום.
+        </p>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat__ic" data-icon="user" aria-hidden="true"></span>
+            <span class="stat__value" id="stat-coaches">—</span>
+            <span class="stat__label">מאמנים רשומים</span>
+          </div>
+          <div class="stat">
+            <span class="stat__ic" data-icon="flag" aria-hidden="true"></span>
+            <span class="stat__value" id="stat-sports">—</span>
+            <span class="stat__label">ענפי ספורט</span>
+          </div>
+          <div class="stat">
+            <span class="stat__ic" data-icon="award" aria-hidden="true"></span>
+            <span class="stat__value" id="stat-authorizations">—</span>
+            <span class="stat__label">הסמכות פעילות</span>
+          </div>
+        </div>
+
+        <!-- ================================================================
+             כרטיס החיפוש — שדה אחד לכל סוגי המזהים, וסינון באותו הכרטיס
+             ================================================================ -->
+        <section class="search-panel" aria-labelledby="search-title">
+          <div class="card accent">
+            <div class="card-b">
+
+              <h2 id="search-title">חיפוש מאמן</h2>
+              <p class="panel-sub">
+                שני מסלולי חיפוש, לפי האפיון: לפי שם מלא, או לפי מזהה יחיד של המאמן.
+              </p>
+
+              <!-- שני מסלולי החיפוש — סעיף 3.4 -->
+              <div class="tabs" role="tablist" aria-label="מסלולי חיפוש">
+                <button class="tab" role="tab" type="button" id="tab-name" data-icon="user"
+                        aria-selected="true" aria-controls="panel-name" tabindex="0">
+                  חיפוש לפי שם
+                </button>
+                <button class="tab" role="tab" type="button" id="tab-id" data-icon="doc"
+                        aria-selected="false" aria-controls="panel-id" tabindex="-1">
+                  חיפוש לפי מזהה
+                </button>
+              </div>
+
+              <!-- ---------- מסלול א׳ — לפי שם (חיפוש מוכל) ---------- -->
+              <div class="tabpanel" role="tabpanel" id="panel-name" aria-labelledby="tab-name" tabindex="0">
+                <form id="form-name" novalidate>
+
+                  <div class="search-row">
+
+                    <div class="field" id="field-first">
+                      <label for="first-name">שם פרטי<span class="req" aria-hidden="true">*</span></label>
+                      <input type="text" id="first-name" autocomplete="off"
+                             placeholder="לדוגמה: דוד"
+                             aria-describedby="first-name-error">
+                      <span class="errmsg" id="first-name-error" role="alert"></span>
+                    </div>
+
+                    <div class="field" id="field-last">
+                      <label for="last-name">שם משפחה<span class="req" aria-hidden="true">*</span></label>
+                      <input type="text" id="last-name" autocomplete="off"
+                             placeholder="לדוגמה: כהן"
+                             aria-describedby="last-name-error">
+                      <span class="errmsg" id="last-name-error" role="alert"></span>
+                    </div>
+
+                    <button class="btn btn-pri btn-lg search-submit" type="submit">חיפוש</button>
+                  </div>
+
+                  <p class="hint search-note">
+                    <span class="req" aria-hidden="true">*</span>
+                    שני השדות חובה, לפחות 2 תווים בכל אחד. החיפוש מאתר גם התאמה חלקית —
+                    אין צורך בשם המלא המדויק.
+                  </p>
+
+                </form>
+              </div>
+
+              <!-- ---------- מסלול ב׳ — לפי מזהה (התאמה מדויקת) ---------- -->
+              <div class="tabpanel" role="tabpanel" id="panel-id" aria-labelledby="tab-id" tabindex="0" hidden>
+                <form id="form-id" novalidate>
+
+                  <fieldset class="idtype">
+                    <legend>סוג המזהה</legend>
+                    <div class="radio-row">
+                      <label class="radio-pill">
+                        <input type="radio" name="id-type" value="id" checked>
+                        <span>תעודת זהות</span>
+                      </label>
+                      <label class="radio-pill">
+                        <input type="radio" name="id-type" value="mobile">
+                        <span>טלפון נייד</span>
+                      </label>
+                      <label class="radio-pill">
+                        <input type="radio" name="id-type" value="email">
+                        <span>דואר אלקטרוני</span>
+                      </label>
+                    </div>
+                  </fieldset>
+
+                  <div class="search-row">
+
+                    <div class="field" id="field-identifier">
+                      <label for="identifier" id="identifier-label">מספר תעודת זהות</label>
+                      <span class="search-input-wrap">
+                        <span class="search-ic" data-icon="search" aria-hidden="true"></span>
+                        <input type="text" id="identifier" autocomplete="off" inputmode="numeric"
+                               aria-describedby="identifier-hint identifier-error">
+                      </span>
+                      <span class="hint" id="identifier-hint"></span>
+                      <span class="errmsg" id="identifier-error" role="alert"></span>
+                    </div>
+
+                    <button class="btn btn-pri btn-lg search-submit" type="submit">חיפוש</button>
+                  </div>
+
+                  <p class="hint search-note">
+                    חיפוש לפי מזהה דורש התאמה מדויקת, ומחזיר מאמן אחד לכל היותר.
+                  </p>
+
+                </form>
+              </div>
+
+              <!-- ================================================================
+                   צמצום התוצאות — מוצג רק כשיש יותר מתוצאה אחת (סעיף 3.5.2).
+                   טלפון ודוא"ל אינם שדות חיפוש כאן אלא כלי איתור: הם מצמצמים
+                   רשימת מאמנים בעלי שם זהה למאמן אחד מדויק.
+                   ================================================================ -->
+              <div class="filter-row" id="filter-bar" hidden>
+
+                <div class="filter-row__head">
+                  <span class="filter-row__title" data-icon="sliders">צמצום התוצאות</span>
+                  <button class="btn btn-ghost filter-clear" type="button" id="filter-clear">ניקוי</button>
+                </div>
+
+                <div class="filter-grid">
+
+                  <div class="field filter-field">
+                    <label for="filter-sport">ענף ספורט</label>
+                    <select id="filter-sport">
+                      <option value="">כל הענפים</option>
+                    </select>
+                  </div>
+
+                  <div class="field filter-field">
+                    <label for="filter-rank">דרגת הסמכה</label>
+                    <select id="filter-rank">
+                      <option value="">כל הדרגות</option>
+                    </select>
+                  </div>
+
+                  <div class="field filter-field">
+                    <label for="filter-mobile">טלפון נייד</label>
+                    <input type="text" id="filter-mobile" autocomplete="off" inputmode="numeric"
+                          >
+                  </div>
+
+                  <div class="field filter-field">
+                    <label for="filter-email">דואר אלקטרוני</label>
+                    <input type="text" id="filter-email" autocomplete="off"
+                          >
+                  </div>
+
+                </div>
+
+                <p class="hint filter-note">
+                  טלפון ודוא״ל מיועדים לאיתור מדויק כשיש כמה מאמנים בעלי שם זהה.
+                  הם נבדקים מול הרשומה בהתאמה מלאה, ואינם מוצגים בתוצאות.
+                </p>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         תוצאות — סעיף 3.5
+         ==================================================================== -->
+    <section class="container results" id="results" aria-labelledby="results-title" hidden>
+
+      <div class="results__head section-head">
+        <h2 class="sec" id="results-title" tabindex="-1">תוצאות החיפוש</h2>
+        <span class="cnt" id="results-cnt" hidden></span>
+      </div>
+      <p class="results__count" id="results-count"></p>
+
+      <!-- הכרזה לקורא מסך על שינוי בתוצאות -->
+      <p class="sr-only" id="results-status" role="status" aria-live="polite"></p>
+
+      <!-- Disclaimer — הנוסח הסופי יסופק על ידי הלשכה המשפטית -->
+      <div class="info-box disclaimer" id="disclaimer">
+        <span class="ico" data-icon="info" aria-hidden="true"></span>
+        <span>
+          המידע במרשם משקף את נתוני ההסמכה כפי שנרשמו במועד הפקת התצוגה, ואינו מהווה אישור
+          על כשירותו של המאמן לפעילות מסוימת.
+          <span class="disclaimer__note">נוסח סופי יימסר על ידי הלשכה המשפטית.</span>
+        </span>
+      </div>
+
+      <div class="coach-grid" id="results-grid"></div>
+
+    </section>
+
+  </main>
+
+  <!-- ======================================================================
+       כותרת תחתונה
+       ====================================================================== -->
+  <footer class="govfoot">
+    <div class="container">
+
+      <div class="govfoot__grid">
+
+        <div class="govfoot__brand">
+          <img src="assets/ministry-logo.svg" alt="">
+          <div>
+            <b>מרשם המאמנים הלאומי</b>
+            <p>משרד התרבות והספורט<br>שירות ציבורי לצפייה בלבד, לפי חוק הספורט.</p>
+          </div>
+        </div>
+
+        <div>
+          <h3>אודות המרשם</h3>
+          <ul>
+            <li><a href="#">על מרשם המאמנים</a></li>
+            <li><a href="#">חוק הספורט</a></li>
+            <li><a href="#">תנאי רישום והסמכה</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>שירותים למאמנים</h3>
+          <ul>
+            <li><a href="#">רישום למרשם</a></li>
+            <li><a href="#">עדכון פרטים</a></li>
+            <li><a href="#">חידוש רישיון</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>עזרה ותמיכה</h3>
+          <ul>
+            <li><a href="#">צור קשר</a></li>
+            <li><a href="#">שאלות נפוצות</a></li>
+            <li><a href="#">הצהרת נגישות</a></li>
+            <li><a href="#">מדיניות פרטיות</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <p class="govfoot__bottom">
+        © מדינת ישראל — משרד התרבות והספורט. המידע באתר ניתן לצפייה בלבד.
+      </p>
+
+    </div>
+  </footer>
+
+  <script src="js/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

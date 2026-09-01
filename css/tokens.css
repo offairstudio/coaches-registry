@@ -1,0 +1,210 @@
+/* ==========================================================================
+   טוקנים — נלקחו ישירות ממשתני הקובץ ב-Figma
+   "משרד המדע תרבות — מערכת טפסים", מסך 2173:178
+   --------------------------------------------------------------------------
+   הערכים כאן אינם משוחזרים מהעין: הם נשלפו דרך get_variable_defs,
+   ולכן שמות הטוקנים תואמים אחד לאחד לשמות בקובץ העיצוב.
+   ========================================================================== */
+
+:root {
+  /* ---- צבע ---- */
+  --white:      #ffffff;
+  --surface:    #ffffff;
+  --blue:       #0068f5;
+  --blue-l:     #e8f1fe;
+  --blue-l2:    #f4f8ff;
+  --link:       #0b6ee0;
+
+  --ink:        #0c3058;
+  --ink-strong: #0b3668;
+  --ink-soft:   #54688a;
+  --muted:      #6a7790;
+
+  --line:       #e4e9f2;
+  --line-2:     #cfd8e6;
+  --bg-2:       #eef2f8;
+  --page:       #eff6fe;   /* רקע העמוד במסך ה-Figma */
+
+  --danger:     #c2241b;
+
+  /* דרגות — צבעי הסטטוס מהקובץ */
+  --st-sub-t:   #1d4ed8;  --st-sub-b:   #dbe7fe;
+  --st-appr-t:  #15803d;  --st-appr-b:  #d7f2e0;
+  --st-wait-t:  #b45309;  --st-wait-b:  #fdebd0;
+
+  /* ---- צורה ---- */
+  --r:      7px;      /* radius/base */
+  --r-lg:   16px;     /* radius/lg   */
+  --r-pill: 999px;
+
+  /* ---- הצללה ---- */
+  --e1: 0 2px 2px rgba(0, 0, 0, .16);   /* Elevation/E1 */
+
+  /* ---- מידות פריסה ---- */
+  --container: 1100px;   /* רוחב התוכן במסך ה-Figma */
+  --hh: 66px;            /* גובה הפס העליון */
+
+  --focus: 0 0 0 3px rgba(0, 104, 245, .22);
+}
+
+/* ==========================================================================
+   בסיס
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: Rubik, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;       /* Body/Regular */
+  line-height: 26px;
+  color: var(--ink);
+  background: var(--page);
+  -webkit-font-smoothing: antialiased;
+
+  /* הפוטר נצמד לתחתית גם כשהתוכן קצר מגובה החלון */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { flex: 1 0 auto; }
+
+h1, h2, h3 { margin: 0; }
+p { margin: 0; }
+ul { list-style: none; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, select { font-family: inherit; }
+img, svg { max-width: 100%; }
+
+/* כל רכיב שמגדיר display מפורש גובר על תכונת hidden של HTML */
+[hidden] { display: none !important; }
+
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: var(--r); }
+
+.ic-svg { display: inline-block; vertical-align: -.18em; flex-shrink: 0; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: fixed; inset-inline-start: 12px; top: -80px; z-index: 500;
+  background: var(--blue); color: #fff;
+  padding: 10px 18px; border-radius: var(--r);
+  font-size: 14px; font-weight: 600;
+  box-shadow: var(--e1);
+  transition: top .15s;
+}
+.skip-link:focus { top: 10px; }
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+/* ==========================================================================
+   טיפוגרפיה — סולם ה-Figma
+   ========================================================================== */
+
+.t-title  { font-size: 32px;   line-height: 38px; font-weight: 600; letter-spacing: -.2px; color: var(--ink-strong); }
+.t-h2     { font-size: 21px;   line-height: 28px; font-weight: 600; color: var(--ink-strong); }
+.t-h3     { font-size: 16px;   line-height: 22px; font-weight: 600; color: var(--ink-strong); }
+.t-med    { font-size: 15px;   line-height: 22px; font-weight: 500; }
+.t-small  { font-size: 14px;   line-height: 21px; }
+.t-cap    { font-size: 13px;   line-height: 18px; }
+.t-label  { font-size: 14px;   line-height: 20px; font-weight: 600; }
+.t-badge  { font-size: 12.5px; line-height: 16px; font-weight: 600; }
+
+/* ==========================================================================
+   כפתורים
+   ========================================================================== */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 40px; padding-inline: 20px;
+  font-size: 15px; font-weight: 500; line-height: 18px;   /* Button */
+  border-radius: var(--r);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: background .13s, border-color .13s, color .13s;
+}
+.btn-pri { background: var(--blue); color: #fff; }
+.btn-pri:hover { background: #0057cf; }
+
+.btn-out { background: var(--surface); color: var(--ink-strong); border-color: var(--line-2); }
+.btn-out:hover { border-color: var(--blue); color: var(--blue); }
+
+.btn-link { height: auto; padding: 0; color: var(--link); font-weight: 500; }
+.btn-link:hover { text-decoration: underline; }
+
+/* ==========================================================================
+   שדות
+   ========================================================================== */
+
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+
+.field > label {
+  font-size: 14px; line-height: 20px; font-weight: 600;   /* Label */
+  color: var(--ink-strong);
+}
+.req { color: var(--danger); }
+
+.field input,
+.field select {
+  width: 100%; height: 40px;
+  padding-inline: 14px;
+  font-size: 15px; line-height: 22px;    /* Input */
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  transition: border-color .13s, box-shadow .13s;
+}
+.field input::placeholder { color: var(--muted); }
+.field input:hover, .field select:hover { border-color: var(--ink-soft); }
+.field input:focus, .field select:focus {
+  outline: none; border-color: var(--blue); box-shadow: var(--focus);
+}
+.field input[aria-invalid="true"] { border-color: var(--danger); }
+
+/* בורר עם חץ מצויר — החץ עצמו מוזרק כאייקון */
+.sel { position: relative; }
+/* החץ יושב בקצה השמאלי של השדה, כמו בקובץ העיצוב.
+   ב-RTL הקצה השמאלי הוא inset-inline-end, והריפוד שמפנה לו מקום
+   הוא padding-inline-end — לא ה-start. */
+.sel select { appearance: none; padding-inline-end: 38px; cursor: pointer; }
+.sel__ch {
+  position: absolute; inset-inline-end: 14px; bottom: 12px;
+  display: flex; color: var(--ink-soft); pointer-events: none;
+}
+
+.hint { font-size: 13px; line-height: 18px; color: var(--muted); }
+
+.errmsg {
+  font-size: 13px; line-height: 18px; font-weight: 500;
+  color: var(--danger);
+}
+.errmsg:empty { display: none; }
+
+/* ==========================================================================
+   כרטיס
+   ========================================================================== */
+
+.card {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e1);
+  overflow: hidden;
+}
+/* פס ההדגשה העליון של כרטיס החיפוש */
+.card--accent { border-top: 8px solid var(--blue); }
+.card__b { padding: 24px 28px 28px; }
