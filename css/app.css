@@ -24,13 +24,14 @@
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
 
-/* נעילת המיתוג: הסמל בקצה הימני, מפריד, ואז שם המרשם */
+/* נעילת המיתוג: הסמל בקצה הימני, מפריד, ואז שם המרשם.
+   סדר ה-DOM כבר נותן את זה ב-RTL — האיבר הראשון הוא הימני ביותר.
+   הצהרות order קודמות הפכו אותו והעבירו את הסמל לשמאל. */
 .brand { display: flex; align-items: center; gap: 13px; min-width: 0; }
-.brand__em { display: flex; align-items: center; flex-shrink: 0; order: 3; }
+.brand__em { display: flex; align-items: center; flex-shrink: 0; }
 .brand__em img { display: block; height: 48px; width: auto; }
-.brand__div { width: 1px; height: 34px; background: var(--line-2); flex-shrink: 0; order: 2; }
+.brand__div { width: 1px; height: 34px; background: var(--line-2); flex-shrink: 0; }
 .brand__wm {
-  order: 1;
   font-size: 16px; line-height: 22px; font-weight: 600;
   color: var(--ink-strong); white-space: nowrap;
 }
@@ -82,10 +83,10 @@
   gap: 16px;
 }
 
-/* האייקון בקצה השמאלי והמספר מימינו — כמו בקובץ */
+/* האייקון בקצה הימני והטקסט לשמאלו.
+   סדר ה-DOM נותן את זה ב-RTL; row-reverse היה הופך אותו. */
 .stat {
-  display: flex; align-items: flex-start; gap: 16px;
-  flex-direction: row-reverse;
+  display: flex; align-items: flex-start; gap: 14px;
   background: var(--surface);
   border-radius: var(--r-lg);
   box-shadow: var(--e1);
@@ -99,7 +100,7 @@
   background: var(--blue-l);
   color: var(--blue);
 }
-.stat__tx { min-width: 0; }
+.stat__tx { min-width: 0; flex: 1; }
 .stat__v {
   display: block;
   font-size: 21px; line-height: 28px; font-weight: 600;
@@ -289,8 +290,9 @@
   gap: 28px;
 }
 
-/* המיתוג בעמודה הימנית, הסמל בקצה */
-.foot__brand { grid-column: 1; display: flex; align-items: flex-start; gap: 12px; flex-direction: row-reverse; justify-content: flex-end; }
+/* המיתוג בעמודה הימנית, הסמל בקצה הימני.
+   כמו בפס העליון — סדר ה-DOM כבר נותן את זה ב-RTL. */
+.foot__brand { grid-column: 1; display: flex; align-items: flex-start; gap: 12px; }
 .foot__brand img { height: 40px; width: auto; flex: none; }
 .foot__brand b { display: block; font-size: 16px; line-height: 22px; font-weight: 600; color: var(--ink-strong); }
 .foot__brand p { margin-top: 4px; font-size: 13px; line-height: 18px; color: var(--ink-soft); }
