@@ -77,15 +77,19 @@ body { background: var(--surface); }
 .hero::before {
   content: "";
   position: absolute; inset: 0; z-index: -2;
-  /* עומק עדין בלבד, בלי טקסטורה או קישוטים מתחרים. */
-  background: linear-gradient(110deg, #0C356A 0%, #123F7A 58%, #164985 100%);
+  /* עומק עדין בלבד, בלי טקסטורה מתחרה. */
+  background:
+    radial-gradient(circle at 14% 34%, rgba(111, 186, 255, .14), transparent 25%),
+    linear-gradient(110deg, #0C356A 0%, #123F7A 58%, #164985 100%);
 }
 
-/* שכבה שקופה: נשמרת כעוגן שכבות לאיור, בלי להכהות את הרקע הנקי. */
+/* קווי מסלול כמעט-שקופים: מוסיפים רמז לספורט, בלי להתחרות בכותרת. */
 .hero::after {
   content: "";
   position: absolute; inset: 0; z-index: -1;
-  background: transparent;
+  background:
+    radial-gradient(ellipse 64% 150% at -10% 115%, transparent 48%, rgba(211, 234, 255, .18) 48.3% 48.8%, transparent 49.1%),
+    radial-gradient(ellipse 58% 135% at -8% 112%, transparent 48%, rgba(211, 234, 255, .11) 48.3% 48.7%, transparent 49%);
 }
 
 /* איור מותאם למסך גדול: משלים את הטקסט מבלי להתחרות בו.
@@ -93,9 +97,9 @@ body { background: var(--surface); }
 .hero__art {
   position: absolute;
   z-index: -1;
-  left: clamp(-66px, -2vw, -18px);
-  bottom: -94px;
-  width: min(51vw, 660px);
+  left: clamp(-34px, -1vw, -12px);
+  top: 12px;
+  width: min(36vw, 470px);
   height: auto;
   opacity: 1;
   pointer-events: none;
