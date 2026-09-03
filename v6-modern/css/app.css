@@ -94,7 +94,7 @@ body { background: var(--surface); }
   z-index: -1;
   /* הסטה פנימה כך שהחלק התחתון נבלע מאחורי כרטיס החיפוש. */
   left: clamp(74px, 6vw, 108px);
-  top: 0;
+  top: 14px;
   width: min(46vw, 580px);
   height: auto;
   opacity: 1;

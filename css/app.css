@@ -78,10 +78,8 @@ body { background: var(--surface); }
 .hero::before {
   content: "";
   position: absolute; inset: 0; z-index: -2;
-  /* רקע מאויר נפרד: המסלול והאור ממלאים את ההירו, בעוד הימין נשאר שקט לטקסט. */
-  background:
-    linear-gradient(90deg, rgba(5, 31, 70, .08), rgba(5, 31, 70, 0) 60%),
-    url("../assets/hero-coaches-background-v2.png") center 48% / cover no-repeat;
+  /* משטח מאויר עדין: עומק כחול, נקודות שקופות וקשתות בקצוות. */
+  background: url("../assets/hero-gov-surface.png") center / cover no-repeat;
 }
 
 /* קווי המסלול הם חלק מתמונת הרקע, ולכן אין שכבת CSS נוספת מעליה. */
@@ -95,9 +93,9 @@ body { background: var(--surface); }
   position: absolute;
   z-index: -1;
   /* הסטה פנימה כך שהחלק התחתון נבלע מאחורי כרטיס החיפוש. */
-  left: clamp(104px, 8vw, 146px);
-  top: 0;
-  width: min(49vw, 620px);
+  left: clamp(74px, 6vw, 108px);
+  top: 14px;
+  width: min(46vw, 580px);
   height: auto;
   opacity: 1;
   pointer-events: none;
