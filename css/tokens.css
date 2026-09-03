@@ -76,6 +76,10 @@ main { flex: 1 0 auto; }
 h1, h2, h3 { margin: 0; }
 p { margin: 0; }
 ul { list-style: none; margin: 0; padding: 0; }
+
+/* בלי האיפוס הזה הדפדפן נותן ל-dd מרווח פנימי של 40px, שדוחף את
+   המספר הצידה ומוציא אותו מיישור מול התווית שמתחתיו. */
+dl, dd, dt { margin: 0; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 input, select { font-family: inherit; }

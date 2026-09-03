@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 760" preserveAspectRatio="xMidYMid slice" role="img" aria-label="">
+  <title>רקע דקורטיבי — מסלולי ריצה מופשטים</title>
+  <defs>
+    <!-- עומק הכחול הממשלתי: מכהה לכיוון הקצה הימני, שם יושב הטקסט -->
+    <linearGradient id="sky" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0"    stop-color="#0A2A55"/>
+      <stop offset=".45"  stop-color="#0B3A7A"/>
+      <stop offset="1"    stop-color="#0B5BD3"/>
+    </linearGradient>
+
+    <radialGradient id="glow" cx=".18" cy=".12" r=".72">
+      <stop offset="0"   stop-color="#3E9BFF" stop-opacity=".55"/>
+      <stop offset="1"   stop-color="#3E9BFF" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="glow2" cx=".72" cy=".95" r=".6">
+      <stop offset="0"   stop-color="#00D3B8" stop-opacity=".28"/>
+      <stop offset="1"   stop-color="#00D3B8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- הקווים נמוגים לכיוון הטקסט כדי לא להתחרות בו על תשומת הלב -->
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"   stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".38" stop-color="#fff" stop-opacity=".85"/>
+      <stop offset="1"   stop-color="#fff" stop-opacity="1"/>
+    </linearGradient>
+    <mask id="lanesMask"><rect width="1600" height="760" fill="url(#fade)"/></mask>
+
+    <linearGradient id="lane" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"  stop-color="#8FC4FF" stop-opacity=".10"/>
+      <stop offset=".5" stop-color="#CFE6FF" stop-opacity=".42"/>
+      <stop offset="1"  stop-color="#8FC4FF" stop-opacity=".08"/>
+    </linearGradient>
+
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="1.6" cy="1.6" r="1.6" fill="#BBD9FF" opacity=".16"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="760" fill="url(#sky)"/>
+  <rect width="1600" height="760" fill="url(#glow)"/>
+  <rect width="1600" height="760" fill="url(#glow2)"/>
+  <rect width="1600" height="760" fill="url(#dots)"/>
+
+  <!-- מסלולי הריצה: קשתות קונצנטריות בפרספקטיבה, מלמטה־שמאל כלפי מעלה -->
+  <g mask="url(#lanesMask)" fill="none" stroke="url(#lane)" stroke-linecap="round">
+    <path d="M-150 880 C 180 560, 620 430, 1180 396" stroke-width="46"/>
+    <path d="M-150 960 C 210 620, 680 486, 1290 452" stroke-width="42"/>
+    <path d="M-170 1046 C 240 686, 742 546, 1400 512" stroke-width="38"/>
+    <path d="M-190 1140 C 270 756, 806 610, 1520 576" stroke-width="34"/>
+    <path d="M-210 1242 C 300 830, 872 678, 1640 644" stroke-width="30"/>
+  </g>
+
+  <!-- קווי תנועה דקים, רומזים על מהירות -->
+  <g mask="url(#lanesMask)" fill="none" stroke="#DCEBFF" stroke-linecap="round" opacity=".5">
+    <path d="M120 236 H 470"  stroke-width="3"/>
+    <path d="M186 272 H 402"  stroke-width="2.4"/>
+    <path d="M78  308 H 336"  stroke-width="2"/>
+    <path d="M232 150 H 560"  stroke-width="2.2"/>
+  </g>
+
+  <!-- הילה רכה בקצה התחתון, כדי שהמעבר אל גוף העמוד יהיה חלק -->
+  <rect y="640" width="1600" height="120" fill="#0A2A55" opacity=".28"/>
+</svg>

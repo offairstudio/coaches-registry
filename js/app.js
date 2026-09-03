@@ -216,6 +216,24 @@
       <p>${esc(body)}</p>
     </div>`;
 
+  /**
+   * מיקום בלוק הנתונים.
+   * לפני חיפוש הוא יושב בין החיפוש לתוצאות; ברגע שיש תוצאות הוא יורד
+   * אל מתחתן, כדי שלא יחצוץ בין החיפוש לתוצאה שלו.
+   *
+   * ההזזה היא של הצומת עצמו ולא רק ויזואלית (order), כדי שסדר ה-DOM,
+   * סדר הקריאה בקורא מסך והסדר הנראה יישארו זהים.
+   */
+  function placeFigures(hasResults) {
+    const figs = $("#figures-slot");
+    const res  = $("#results-slot");
+    if (!figs || !res || !res.parentNode) return;
+
+    const isAfter = res.compareDocumentPosition(figs) & Node.DOCUMENT_POSITION_FOLLOWING;
+    if (hasResults && !isAfter)      res.parentNode.insertBefore(figs, res.nextSibling);
+    else if (!hasResults && isAfter) res.parentNode.insertBefore(figs, res);
+  }
+
   function render() {
     const section = $("#results");
     const grid    = $("#results-grid");
@@ -223,7 +241,11 @@
     const status  = $("#results-status");
     const info    = $("#disclaimer");
 
-    if (state.raw === null) { section.hidden = true; filt.hidden = true; return; }
+    if (state.raw === null) {
+      section.hidden = true; filt.hidden = true;
+      placeFigures(false);
+      return;
+    }
     section.hidden = false;
 
     if (state.raw.length === 0) {
@@ -235,6 +257,7 @@
         "לא נמצא מאמן התואם לפרטים שהוזנו. יש לוודא אותם ולנסות שוב."
       );
       ICONS.hydrate(grid);
+      placeFigures(true);
       status.textContent = "החיפוש הסתיים. לא נמצאו תוצאות.";
       return;
     }
@@ -256,6 +279,7 @@
         )
       : visible.map(renderCoach).join("");
     ICONS.hydrate(grid);
+    placeFigures(true);
 
     status.textContent = `נמצאו ${visible.length} תוצאות.`;
   }

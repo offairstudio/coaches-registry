@@ -68,7 +68,8 @@ body { background: var(--surface); }
 .hero {
   position: relative;
   isolation: isolate;
-  padding-block: 92px 150px;   /* המרווח התחתון פותח מקום לכרטיס החיפוש */
+  /* גובה נוסף מאפשר לאיור להשלים את ההירו, בלי שכרטיס החיפוש יחתוך אותו. */
+  padding-block: 92px 202px;
   color: #fff;
   background: #123F7A;
   overflow: hidden;
@@ -77,19 +78,15 @@ body { background: var(--surface); }
 .hero::before {
   content: "";
   position: absolute; inset: 0; z-index: -2;
-  /* עומק עדין בלבד, בלי טקסטורה מתחרה. */
+  /* רקע מאויר נפרד: המסלול והאור ממלאים את ההירו, בעוד הימין נשאר שקט לטקסט. */
   background:
-    radial-gradient(circle at 14% 34%, rgba(111, 186, 255, .14), transparent 25%),
-    linear-gradient(110deg, #0C356A 0%, #123F7A 58%, #164985 100%);
+    linear-gradient(90deg, rgba(5, 31, 70, .08), rgba(5, 31, 70, 0) 60%),
+    url("../assets/hero-coaches-background-v2.png") center 48% / cover no-repeat;
 }
 
-/* קווי מסלול כמעט-שקופים: מוסיפים רמז לספורט, בלי להתחרות בכותרת. */
+/* קווי המסלול הם חלק מתמונת הרקע, ולכן אין שכבת CSS נוספת מעליה. */
 .hero::after {
-  content: "";
-  position: absolute; inset: 0; z-index: -1;
-  background:
-    radial-gradient(ellipse 64% 150% at -10% 115%, transparent 48%, rgba(211, 234, 255, .18) 48.3% 48.8%, transparent 49.1%),
-    radial-gradient(ellipse 58% 135% at -8% 112%, transparent 48%, rgba(211, 234, 255, .11) 48.3% 48.7%, transparent 49%);
+  content: none;
 }
 
 /* איור מותאם למסך גדול: משלים את הטקסט מבלי להתחרות בו.
@@ -97,9 +94,10 @@ body { background: var(--surface); }
 .hero__art {
   position: absolute;
   z-index: -1;
-  left: clamp(-34px, -1vw, -12px);
-  top: 12px;
-  width: min(36vw, 470px);
+  /* הסטה פנימה כך שהחלק התחתון נבלע מאחורי כרטיס החיפוש. */
+  left: clamp(104px, 8vw, 146px);
+  top: 0;
+  width: min(49vw, 620px);
   height: auto;
   opacity: 1;
   pointer-events: none;

@@ -19,14 +19,13 @@
 
   <!-- ======================================================================
        הפס העליון — סעיף 3.2
-       הסדר לפי הקובץ: סמל המשרד בקצה הימני, מפריד, ואז שם המרשם.
        ====================================================================== -->
   <header class="govbar">
     <div class="govbar__in">
 
       <a class="brand" href="#" aria-label="מרשם המאמנים הלאומי — לדף הבית">
         <span class="brand__em">
-          <img src="assets/ministry-lockup.svg" alt="סמל משרד התרבות והספורט" width="74" height="42">
+          <img src="assets/ministry-lockup.svg" alt="סמל משרד התרבות והספורט" width="84" height="48">
         </span>
         <span class="brand__div" aria-hidden="true"></span>
         <span class="brand__wm">מרשם המאמנים הלאומי</span>
@@ -43,195 +42,182 @@
   <main id="main">
 
     <!-- ====================================================================
-         ההירו — סעיפים 3.3 ו-3.6
-         שתי עמודות: הטקסט מימין, שלושת כרטיסי הנתונים משמאל.
+         ההירו — סעיף 3.3
+         הרקע הספורטיבי דקורטיבי בלבד ואינו נושא מידע, ולכן הוא ב-CSS
+         ולא כתמונה במסמך: קורא מסך לא אמור להיתקל בו.
          ==================================================================== -->
     <section class="hero">
-      <div class="container hero__in">
-
-        <div class="hero__tx">
-          <p class="kicker" data-icon="shield" data-icon-size="16">שירות מקוון · פתוח לכלל הציבור</p>
-          <h1 class="t-title">מרשם המאמנים הלאומי</h1>
-          <p class="hero__lead">
-            כאן ניתן לבדוק אם מאמן רשום במרשם הלאומי ולצפות בהסמכות שברשותו — ענף
-            הספורט והדרגה. השירות פתוח לכלל הציבור, ללא צורך בהתחברות או ברישום.
-          </p>
-        </div>
-
-        <div class="stats">
-          <div class="stat">
-            <span class="stat__ch" data-icon="user" data-icon-size="18" aria-hidden="true"></span>
-            <span class="stat__tx">
-              <span class="stat__v" id="stat-coaches">—</span>
-              <span class="stat__l">מאמנים רשומים</span>
-            </span>
-          </div>
-          <div class="stat">
-            <span class="stat__ch" data-icon="flag" data-icon-size="18" aria-hidden="true"></span>
-            <span class="stat__tx">
-              <span class="stat__v" id="stat-sports">—</span>
-              <span class="stat__l">ענפי ספורט</span>
-            </span>
-          </div>
-          <div class="stat">
-            <span class="stat__ch" data-icon="award" data-icon-size="18" aria-hidden="true"></span>
-            <span class="stat__tx">
-              <span class="stat__v" id="stat-authorizations">—</span>
-              <span class="stat__l">הסמכות פעילות</span>
-            </span>
-          </div>
-        </div>
-
+      <!-- דקורטיבי בלבד: האיור מוסיף הקשר של מאמן מוסמך, ללא מידע חיוני. -->
+      <img class="hero__art" src="assets/coach-registry-hero.png" alt="" aria-hidden="true">
+      <div class="wrap hero__in">
+        <p class="kicker" data-icon="shield" data-icon-size="16">שירות מקוון · פתוח לכלל הציבור</p>
+        <h1>מרשם המאמנים הלאומי</h1>
+        <p class="hero__lead">
+          בדיקה אם מאמנ/ת רשומ/ה במרשם, ובאילו ענפי ספורט ודרגות.
+        </p>
       </div>
     </section>
 
     <!-- ====================================================================
          כרטיס החיפוש — סעיף 3.4
-         שני מסלולים: לפי שם (מוכל, שני שדות חובה) או לפי מזהה (מדויק).
+         רוכב על גבול ההירו כדי שיהיה האלמנט הבולט בדף.
          ==================================================================== -->
-    <div class="container">
-      <section class="card card--accent search" aria-labelledby="search-t">
-        <div class="card__b">
+    <div class="wrap">
+      <section class="search" aria-labelledby="search-t">
 
-          <div class="search__head">
-            <h2 class="t-h2" id="search-t">חיפוש מאמן</h2>
-            <p class="search__sub">
-              שני מסלולי חיפוש, לפי האפיון: לפי שם מלא, או לפי מזהה יחיד של המאמן.
-            </p>
-          </div>
-
-          <div class="tabs" role="tablist" aria-label="מסלולי חיפוש">
-            <button class="tab" role="tab" type="button" id="tab-name" data-icon="user" data-icon-size="18"
-                    aria-selected="true" aria-controls="panel-name" tabindex="0">חיפוש לפי שם</button>
-            <button class="tab" role="tab" type="button" id="tab-id" data-icon="doc" data-icon-size="18"
-                    aria-selected="false" aria-controls="panel-id" tabindex="-1">חיפוש לפי מזהה</button>
-          </div>
-
-          <!-- ---------- מסלול א׳ — לפי שם ---------- -->
-          <div role="tabpanel" id="panel-name" aria-labelledby="tab-name" tabindex="0">
-            <form id="form-name" novalidate>
-
-              <div class="srow">
-                <div class="field">
-                  <label for="first-name">שם פרטי <span class="req" aria-hidden="true">*</span></label>
-                  <input type="text" id="first-name" autocomplete="off"
-                         placeholder="לדוגמה: דוד" aria-describedby="first-name-error">
-                </div>
-                <div class="field">
-                  <label for="last-name">שם משפחה <span class="req" aria-hidden="true">*</span></label>
-                  <input type="text" id="last-name" autocomplete="off"
-                         placeholder="לדוגמה: כהן" aria-describedby="last-name-error">
-                </div>
-                <button class="btn btn-pri" type="submit">חיפוש</button>
-              </div>
-
-              <p class="errmsg" id="first-name-error" role="alert"></p>
-              <p class="errmsg" id="last-name-error" role="alert"></p>
-
-              <p class="snote">
-                <span class="req" aria-hidden="true">*</span>
-                שני השדות חובה, לפחות 2 תווים בכל אחד. החיפוש מאתר גם התאמה חלקית —
-                אין צורך בשם המלא המדויק.
-              </p>
-
-            </form>
-          </div>
-
-          <!-- ---------- מסלול ב׳ — לפי מזהה ---------- -->
-          <div role="tabpanel" id="panel-id" aria-labelledby="tab-id" tabindex="0" hidden>
-            <form id="form-id" novalidate>
-
-              <div class="srow">
-                <div class="field sel">
-                  <label for="id-type">סוג המזהה</label>
-                  <select id="id-type">
-                    <option value="id">תעודת זהות</option>
-                    <option value="mobile">טלפון נייד</option>
-                    <option value="email">דואר אלקטרוני</option>
-                  </select>
-                  <span class="sel__ch" data-icon="chevdown" data-icon-size="16" aria-hidden="true"></span>
-                </div>
-                <div class="field">
-                  <label for="identifier" id="identifier-label">מספר תעודת זהות</label>
-                  <input type="text" id="identifier" autocomplete="off" inputmode="numeric"
-                         aria-describedby="identifier-hint identifier-error">
-                </div>
-                <button class="btn btn-pri" type="submit">חיפוש</button>
-              </div>
-
-              <p class="errmsg" id="identifier-error" role="alert"></p>
-
-              <p class="snote" id="identifier-hint"></p>
-
-            </form>
-          </div>
-
+        <div class="search__head">
+          <h2 id="search-t">חיפוש מאמן</h2>
         </div>
+
+        <div class="tabs" role="tablist" aria-label="מסלולי חיפוש">
+          <button class="tab" role="tab" type="button" id="tab-name" data-icon="user" data-icon-size="18"
+                  aria-selected="true" aria-controls="panel-name" tabindex="0">חיפוש לפי שם</button>
+          <button class="tab" role="tab" type="button" id="tab-id" data-icon="doc" data-icon-size="18"
+                  aria-selected="false" aria-controls="panel-id" tabindex="-1">חיפוש לפי מזהה</button>
+        </div>
+
+        <!-- ---------- מסלול א׳ — לפי שם ---------- -->
+        <div role="tabpanel" id="panel-name" aria-labelledby="tab-name" tabindex="0">
+          <form id="form-name" novalidate>
+            <div class="srow">
+              <div class="field">
+                <label for="first-name">שם פרטי <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="first-name" autocomplete="off" aria-describedby="first-name-error">
+              </div>
+              <div class="field">
+                <label for="last-name">שם משפחה <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="last-name" autocomplete="off" aria-describedby="last-name-error">
+              </div>
+              <button class="btn btn-pri btn-lg" type="submit">חיפוש</button>
+            </div>
+
+            <p class="errmsg" id="first-name-error" role="alert"></p>
+            <p class="errmsg" id="last-name-error" role="alert"></p>
+
+            <p class="snote">
+              <span class="req" aria-hidden="true">*</span>
+              שני השדות חובה, לפחות 2 תווים בכל אחד. החיפוש מאתר גם התאמה חלקית.
+            </p>
+          </form>
+        </div>
+
+        <!-- ---------- מסלול ב׳ — לפי מזהה ---------- -->
+        <div role="tabpanel" id="panel-id" aria-labelledby="tab-id" tabindex="0" hidden>
+          <form id="form-id" novalidate>
+            <div class="srow">
+              <div class="field sel">
+                <label for="id-type">סוג המזהה</label>
+                <select id="id-type">
+                  <option value="id">תעודת זהות</option>
+                  <option value="mobile">טלפון נייד</option>
+                  <option value="email">דואר אלקטרוני</option>
+                </select>
+                <span class="sel__ch" data-icon="chevdown" data-icon-size="16" aria-hidden="true"></span>
+              </div>
+              <div class="field">
+                <label for="identifier" id="identifier-label">מספר תעודת זהות</label>
+                <input type="text" id="identifier" autocomplete="off" inputmode="numeric"
+                       aria-describedby="identifier-hint identifier-error">
+              </div>
+              <button class="btn btn-pri btn-lg" type="submit">חיפוש</button>
+            </div>
+
+            <p class="errmsg" id="identifier-error" role="alert"></p>
+            <p class="snote" id="identifier-hint"></p>
+          </form>
+        </div>
+
       </section>
     </div>
 
     <!-- ====================================================================
-         כרטיס התוצאות — סעיף 3.5
+         הנתונים — סעיף 3.6
+         --------------------------------------------------------------------
+         לפני חיפוש הבלוק יושב כאן. ברגע שיש תוצאות הוא מועבר אל מתחת
+         להן (ראה placeFigures ב-app.js), כדי שלא יחצוץ בין החיפוש
+         לתוצאות שלו.
          ==================================================================== -->
-    <div class="container">
-      <section class="card" id="results" aria-labelledby="results-t" hidden>
-        <div class="card__b">
-
-          <div class="res__head">
-            <h2 class="t-h2" id="results-t" tabindex="-1">תוצאות חיפוש</h2>
+    <div class="wrap" id="figures-slot">
+      <dl class="figures" aria-label="נתוני המרשם">
+        <div class="fig">
+          <span class="fig__ic" data-icon="user" data-icon-size="22" aria-hidden="true"></span>
+          <div>
+            <dd class="fig__v" id="stat-coaches">—</dd>
+            <dt class="fig__l">מאמנים רשומים</dt>
           </div>
-
-          <p class="sr-only" id="results-status" role="status" aria-live="polite"></p>
-
-          <!-- Disclaimer — הנוסח הסופי יסופק על ידי הלשכה המשפטית -->
-          <div class="info" id="disclaimer">
-            <span class="info__ic" data-icon="info" data-icon-size="18" aria-hidden="true"></span>
-            <span>
-              המידע במרשם משקף את נתוני ההסמכה כפי שנרשמו במועד הפקת התצוגה, ואינו מהווה
-              אישור על כשירותו של המאמן לפעילות מסוימת.
-              <span class="info__note">נוסח סופי יימסר על ידי הלשכה המשפטית.</span>
-              טלפון ודוא״ל מיועדים לאיתור מדויק כשיש כמה מאמנים בעלי שם זהה. הם נבדקים מול
-              הרשומה בהתאמה מלאה, ואינם מוצגים בתוצאות.
-            </span>
-          </div>
-
-          <!-- סינון — מוצג רק כשיש יותר מתוצאה אחת (סעיף 3.5.2) -->
-          <div class="filt" id="filter-bar" hidden>
-
-            <div class="filt__head">
-              <span class="filt__t">סינון התוצאות</span>
-              <button class="btn btn-link" type="button" id="filter-clear">ניקוי הסננים</button>
-            </div>
-
-            <div class="filt__grid">
-              <div class="field sel">
-                <label for="filter-sport">ענף ספורט</label>
-                <select id="filter-sport"><option value="">כל הענפים</option></select>
-                <span class="sel__ch" data-icon="chevdown" data-icon-size="16" aria-hidden="true"></span>
-              </div>
-              <div class="field sel">
-                <label for="filter-rank">דרגת הסמכה</label>
-                <select id="filter-rank"><option value="">כל הדרגות</option></select>
-                <span class="sel__ch" data-icon="chevdown" data-icon-size="16" aria-hidden="true"></span>
-              </div>
-              <div class="field">
-                <label for="filter-mobile">טלפון נייד</label>
-                <input type="text" id="filter-mobile" autocomplete="off"
-                       inputmode="numeric">
-              </div>
-              <div class="field">
-                <label for="filter-email">דואר אלקטרוני</label>
-                <input type="text" id="filter-email" autocomplete="off">
-              </div>
-            </div>
-
-          </div>
-
-          <p class="res__count" id="results-count"></p>
-
-          <div class="coaches" id="results-grid"></div>
-
         </div>
+        <div class="fig">
+          <span class="fig__ic" data-icon="flag" data-icon-size="22" aria-hidden="true"></span>
+          <div>
+            <dd class="fig__v" id="stat-sports">—</dd>
+            <dt class="fig__l">ענפי ספורט</dt>
+          </div>
+        </div>
+        <div class="fig">
+          <span class="fig__ic" data-icon="award" data-icon-size="22" aria-hidden="true"></span>
+          <div>
+            <dd class="fig__v" id="stat-authorizations">—</dd>
+            <dt class="fig__l">הסמכות פעילות</dt>
+          </div>
+        </div>
+      </dl>
+    </div>
+
+    <!-- ====================================================================
+         תוצאות — סעיף 3.5
+         ==================================================================== -->
+    <div class="wrap" id="results-slot">
+      <section class="res" id="results" aria-labelledby="results-t" hidden>
+
+        <div class="res__head">
+          <h2 id="results-t" tabindex="-1">תוצאות החיפוש</h2>
+          <p class="res__count" id="results-count"></p>
+        </div>
+
+        <p class="sr-only" id="results-status" role="status" aria-live="polite"></p>
+
+        <div class="filt" id="filter-bar" hidden>
+          <div class="filt__head">
+            <span class="filt__t">סינון התוצאות</span>
+            <button class="btn btn-link" type="button" id="filter-clear">ניקוי הסננים</button>
+          </div>
+          <div class="filt__grid">
+            <div class="field sel">
+              <label for="filter-sport">ענף ספורט</label>
+              <select id="filter-sport"><option value="">כל הענפים</option></select>
+              <span class="sel__ch" data-icon="chevdown" data-icon-size="16" aria-hidden="true"></span>
+            </div>
+            <div class="field sel">
+              <label for="filter-rank">דרגת הסמכה</label>
+              <select id="filter-rank"><option value="">כל הדרגות</option></select>
+              <span class="sel__ch" data-icon="chevdown" data-icon-size="16" aria-hidden="true"></span>
+            </div>
+            <div class="field">
+              <label for="filter-mobile">טלפון נייד</label>
+              <input type="text" id="filter-mobile" autocomplete="off" inputmode="numeric">
+            </div>
+            <div class="field">
+              <label for="filter-email">דואר אלקטרוני</label>
+              <input type="text" id="filter-email" autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+        <div class="coaches" id="results-grid"></div>
+
+        <!-- Disclaimer — הנוסח הסופי יסופק על ידי הלשכה המשפטית.
+             שים לב: סעיף 3.5.1 באפיון מבקש אותו *בראש* התוצאות. הוא
+             הועבר לכאן לבקשת הלקוחה, כי בראש הרשימה הוא חוסם את הסריקה.
+             האפיון טעון עדכון בהתאם. -->
+        <div class="info" id="disclaimer">
+          <span class="info__ic" data-icon="info" data-icon-size="18" aria-hidden="true"></span>
+          <span>
+            המידע במרשם משקף את נתוני ההסמכה כפי שנרשמו במועד הפקת התצוגה, ואינו מהווה
+            אישור על כשירותו של המאמן לפעילות מסוימת. טלפון ודוא״ל משמשים לאיתור מדויק
+            כשיש כמה מאמנים בעלי שם זהה, ואינם מוצגים בתוצאות.
+          </span>
+        </div>
+
       </section>
     </div>
 
@@ -241,8 +227,7 @@
        הפוטר
        ====================================================================== -->
   <footer class="foot">
-    <div class="container">
-
+    <div class="wrap">
       <div class="foot__grid">
 
         <div class="foot__brand">
@@ -286,7 +271,6 @@
       <p class="foot__bottom">
         © מדינת ישראל — משרד התרבות והספורט. המידע באתר ניתן לצפייה בלבד.
       </p>
-
     </div>
   </footer>
 
