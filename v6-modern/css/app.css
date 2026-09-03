@@ -159,15 +159,11 @@ body { background: var(--surface); }
   padding: 30px 34px 34px;
 }
 
-.search__head {
-  display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
-  margin-bottom: 22px;
-}
+.search__head { margin-bottom: 22px; }
 .search__head h2 {
   font-size: 23px; line-height: 30px; font-weight: 600;
   color: var(--ink-strong);
 }
-.search__sub { font-size: 14px; line-height: 21px; color: var(--ink-soft); }
 
 /* -- בורר המסלולים -- */
 .tabs { display: inline-flex; gap: 4px; padding: 4px; margin-bottom: 24px;
