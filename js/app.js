@@ -31,8 +31,13 @@
    */
   const state = {
     raw: null,
+    /** "name" | "id" — קובע אם מוצגת ההודעה על שמות זהים */
+    mode: null,
     filters: { sport: "", rank: "", mobile: "", email: "" }
   };
+
+  /** מעל המספר הזה הענפים מקופלים מאחורי כפתור פתיחה */
+  const VISIBLE_AUTHS = 3;
 
   const onlyDigits = s => String(s).replace(/[-\s]/g, "");
   const normalize  = s => (s || "").trim().replace(/\s+/g, " ").replace(/['׳']/g, "׳");
@@ -51,19 +56,6 @@
       if (!value) return "יש להזין מספר תעודת זהות";
       return /^\d{9}$/.test(onlyDigits(value))
         ? null : "מספר תעודת זהות חייב להכיל בדיוק 9 ספרות";
-    },
-    mobile(value) {
-      if (!value) return "יש להזין מספר טלפון נייד";
-      const d = onlyDigits(value);
-      if (!/^\d{10}$/.test(d)) return "מספר טלפון נייד חייב להכיל 10 ספרות";
-      return MOBILE_PREFIXES.includes(d.slice(0, 3))
-        ? null
-        : "קידומת סלולרית לא תקינה. קידומות מותרות: " + MOBILE_PREFIXES.join(", ");
-    },
-    email(value) {
-      if (!value) return "יש להזין כתובת דואר אלקטרוני";
-      return /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(value)
-        ? null : "כתובת דואר אלקטרוני אינה בפורמט תקין (לדוגמה: name@domain.com)";
     }
   };
 
@@ -90,16 +82,10 @@
       normalize(r.FirstName).includes(f) && normalize(r.LastName).includes(l));
   }
 
-  /** מסלול ב׳ — התאמה מדויקת */
-  function searchByIdentifier(type, value) {
-    const v = normalize(value);
-    if (type === "email") {
-      return MOCK_RECORDS.filter(r =>
-        String(r.PersonEmail).toLowerCase() === v.toLowerCase());
-    }
-    const field = { id: "Id_Number__pc", mobile: "PersonMobilePhone" }[type];
-    const needle = onlyDigits(v);
-    return MOCK_RECORDS.filter(r => String(r[field]) === needle);
+  /** מסלול ב׳ — התאמה מדויקת לפי תעודת זהות */
+  function searchById(value) {
+    const needle = onlyDigits(normalize(value));
+    return MOCK_RECORDS.filter(r => String(r.Id_Number__pc) === needle);
   }
 
   /* ======================================================================
@@ -143,15 +129,10 @@
      במפורש רק שם, הסמכות ומזהה ממוסך — כך שאי אפשר להדליף שדה
      בטעות דרך שינוי ברינדור.
 
-     חריג מכוון: 4 הספרות האחרונות של ת"ז, לצורך הבחנה בין מאמנים
-     בעלי שם זהה. המספר המלא לעולם אינו מגיע לתצוגה.
-     בפרודקשן המיסוך חייב להתבצע בשרת — כאן זו הגנת עומק בלבד.
+     ת"ז אינה מגיעה לתצוגה כלל — גם לא חלקית. ההבחנה בין מאמנים
+     בעלי שם זהה נעשית דרך חיפוש לפי ת"ז, שמחזיר מאמן אחד בלבד.
+     כך הדף עומד בסעיף 4 באפיון במלואו.
      ====================================================================== */
-
-  const maskId = n => {
-    const d = String(n);
-    return "•".repeat(Math.max(0, d.length - 4)) + d.slice(-4);
-  };
 
   /** ראשי תיבות לעיגול שבראש הכרטיס */
   const initials = (first, last) =>
@@ -161,7 +142,6 @@
     return {
       firstName: record.FirstName,
       lastName:  record.LastName,
-      maskedId:  maskId(record.Id_Number__pc),
       initials:  initials(record.FirstName, record.LastName),
       totalAuthorizations: record.authorizations.length,
       authorizations: auths.map(a => ({ sport: a.businessType, rank: a.rank }))
@@ -178,21 +158,32 @@
   }
 
   function renderCoach(c, i) {
-    const shown = c.authorizations.length;
     const total = c.totalAuthorizations;
+    const auths = c.authorizations;
     const name  = `${c.firstName} ${c.lastName}`;
     const hid   = `coach-${i}`;
 
-    const count = shown === total
+    const count = auths.length === total
       ? `${total} ${total === 1 ? "הסמכה רשומה" : "הסמכות רשומות"}`
-      : `מוצגות ${shown} מתוך ${total} הסמכות רשומות`;
+      : `מוצגות ${auths.length} מתוך ${total} הסמכות רשומות`;
 
-    const rows = c.authorizations.map(a => `
+    const row = a => `
       <li class="auth">
         <span class="auth__ic" data-icon="whistle" data-icon-size="18" aria-hidden="true"></span>
         <span class="auth__s">${esc(a.sport)}</span>
         <span class="rank" data-rank="${esc(a.rank)}">${esc(a.rank)}</span>
-      </li>`).join("");
+      </li>`;
+
+    // עד 3 ענפים מוצגים תמיד; מעבר לכך השאר מקופלים מאחורי כפתור,
+    // כדי שכל הכרטיסים יישארו באותו גובה
+    const head = auths.slice(0, VISIBLE_AUTHS).map(row).join("");
+    const rest = auths.slice(VISIBLE_AUTHS);
+    const more = rest.length ? `
+      <ul class="coach__list coach__list--more" id="${hid}-more" hidden>${rest.map(row).join("")}</ul>
+      <button type="button" class="coach__more" aria-expanded="false" aria-controls="${hid}-more">
+        <span class="coach__more__t">עוד ${rest.length} ${rest.length === 1 ? "ענף" : "ענפים"}</span>
+        <span class="coach__more__ic" data-icon="chevdown" data-icon-size="16" aria-hidden="true"></span>
+      </button>` : "";
 
     return `
       <article class="coach" aria-labelledby="${hid}">
@@ -200,12 +191,11 @@
           <span class="coach__av" aria-hidden="true">${esc(c.initials)}</span>
           <span class="coach__tx">
             <span class="coach__n" id="${hid}">${esc(name)}</span>
-            <span class="coach__id">ת״ז <bdi>${esc(c.maskedId)}</bdi><span class="sr-only">
-              — מוצגות ארבע הספרות האחרונות בלבד</span></span>
           </span>
         </header>
         <p class="coach__cnt" id="${hid}-cnt">${count}</p>
-        <ul class="coach__list" aria-labelledby="${hid}-cnt">${rows}</ul>
+        <ul class="coach__list" aria-labelledby="${hid}-cnt">${head}</ul>
+        ${more}
       </article>`;
   }
 
@@ -216,22 +206,19 @@
       <p>${esc(body)}</p>
     </div>`;
 
-  /**
-   * מיקום בלוק הנתונים.
-   * לפני חיפוש הוא יושב בין החיפוש לתוצאות; ברגע שיש תוצאות הוא יורד
-   * אל מתחתן, כדי שלא יחצוץ בין החיפוש לתוצאה שלו.
-   *
-   * ההזזה היא של הצומת עצמו ולא רק ויזואלית (order), כדי שסדר ה-DOM,
-   * סדר הקריאה בקורא מסך והסדר הנראה יישארו זהים.
-   */
-  function placeFigures(hasResults) {
-    const figs = $("#figures-slot");
-    const res  = $("#results-slot");
-    if (!figs || !res || !res.parentNode) return;
-
-    const isAfter = res.compareDocumentPosition(figs) & Node.DOCUMENT_POSITION_FOLLOWING;
-    if (hasResults && !isAfter)      res.parentNode.insertBefore(figs, res.nextSibling);
-    else if (!hasResults && isAfter) res.parentNode.insertBefore(figs, res);
+  /** חיווט כפתורי פתיחת הענפים הנוספים */
+  function bindMoreButtons(root) {
+    root.querySelectorAll(".coach__more").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const list = $("#" + btn.getAttribute("aria-controls"));
+        const open = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!open));
+        list.hidden = open;
+        btn.querySelector(".coach__more__t").textContent = open
+          ? `עוד ${list.children.length} ${list.children.length === 1 ? "ענף" : "ענפים"}`
+          : "הצגה מצומצמת";
+      });
+    });
   }
 
   function render() {
@@ -243,7 +230,7 @@
 
     if (state.raw === null) {
       section.hidden = true; filt.hidden = true;
-      placeFigures(false);
+      $("#name-notice").hidden = true;
       return;
     }
     section.hidden = false;
@@ -252,17 +239,18 @@
       filt.hidden = true;
       info.hidden = true;
       $("#results-count").textContent = "";
+      $("#name-notice").hidden = true;
       grid.innerHTML = renderEmpty(
         "לא נמצאו תוצאות",
         "לא נמצא מאמן התואם לפרטים שהוזנו. יש לוודא אותם ולנסות שוב."
       );
       ICONS.hydrate(grid);
-      placeFigures(true);
       status.textContent = "החיפוש הסתיים. לא נמצאו תוצאות.";
       return;
     }
 
     info.hidden = false;
+    $("#name-notice").hidden = state.mode !== "name";
     // הסינון מוצג רק כשיש יותר מתוצאה אחת (סעיף 3.5.2)
     filt.hidden = state.raw.length <= 1;
 
@@ -279,7 +267,7 @@
         )
       : visible.map(renderCoach).join("");
     ICONS.hydrate(grid);
-    placeFigures(true);
+    bindMoreButtons(grid);
 
     status.textContent = `נמצאו ${visible.length} תוצאות.`;
   }
@@ -318,6 +306,7 @@
       });
       // מעבר מסלול מנקה תוצאות, כדי שלא יוצגו תוצאות של מסלול אחר
       state.raw = null;
+      state.mode = null;
       render();
     }
 
@@ -349,6 +338,7 @@
       const okL = setError(last,  "#last-name-error",  validators.name(last.value.trim(),  "שם משפחה"));
       if (!okF || !okL) { (!okF ? first : last).focus(); return; }
 
+      state.mode = "name";
       beginSearch(searchByName(first.value, last.value));
       showResults();
     });
@@ -361,51 +351,31 @@
 
   function initIdSearch() {
     const form  = $("#form-id");
-    const kind  = $("#id-type");
     const input = $("#identifier");
-    const label = $("#identifier-label");
-    const hint  = $("#identifier-hint");
-
-    const CONFIG = {
-      id:     { label: "מספר תעודת זהות",     hint: "9 ספרות, כולל ספרת ביקורת.",
-                type: "text",  mode: "numeric",     max: 9 },
-      mobile: { label: "מספר טלפון נייד",      hint: "10 ספרות. קידומות מותרות: " + MOBILE_PREFIXES.join(", ") + ".",
-                type: "tel",   mode: "tel",    max: 12 },
-      email:  { label: "כתובת דואר אלקטרוני", hint: "בפורמט name@domain.com.",
-                type: "email", mode: "email", max: 254 }
-    };
-
-    function syncField() {
-      const c = CONFIG[kind.value];
-      label.textContent = c.label;
-      hint.textContent  = c.hint + " החיפוש מדויק ומחזיר מאמן אחד לכל היותר.";
-      input.type        = c.type;
-      input.inputMode   = c.mode;
-      input.maxLength   = c.max;
-      input.value       = "";
-      setError(input, "#identifier-error", null);
-    }
-
-    kind.addEventListener("change", () => {
-      syncField();
-      state.raw = null;   // החלפת סוג מזהה מנקה תוצאות קודמות
-      render();
-      input.focus();
-    });
 
     form.addEventListener("submit", e => {
       e.preventDefault();
-      if (!setError(input, "#identifier-error", validators[kind.value](input.value.trim()))) {
-        input.focus(); return;
+      if (!setError(input, "#identifier-error", validators.id(input.value.trim()))) {
+        input.focus();
+        return;
       }
-      beginSearch(searchByIdentifier(kind.value, input.value));
+      state.mode = "id";
+      beginSearch(searchById(input.value));
       showResults();
     });
 
     input.addEventListener("input", () => {
-      if (input.hasAttribute("aria-invalid")) setError(input, "#identifier-error", null); });
+      if (input.hasAttribute("aria-invalid")) setError(input, "#identifier-error", null);
+    });
+  }
 
-    syncField();
+  /** הקישור שבהודעה מעביר למסלול ת"ז וממקד את השדה */
+  function initNoticeCta() {
+    $("#go-id").addEventListener("click", () => {
+      $("#tab-id").click();
+      $("#identifier").focus();
+      $(".search").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
   }
 
   function initFilters() {
@@ -438,6 +408,7 @@
     initTabs();
     initNameSearch();
     initIdSearch();
+    initNoticeCta();
     initFilters();
     render();
   });

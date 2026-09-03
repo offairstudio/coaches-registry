@@ -47,14 +47,25 @@
          ולא כתמונה במסמך: קורא מסך לא אמור להיתקל בו.
          ==================================================================== -->
     <section class="hero">
-      <!-- דקורטיבי בלבד: האיור מוסיף הקשר של מאמן מוסמך, ללא מידע חיוני. -->
       <img class="hero__art" src="assets/coach-registry-gov-hero-cutout.png" alt="" aria-hidden="true">
       <div class="wrap hero__in">
-        <p class="kicker" data-icon="shield" data-icon-size="16">שירות מקוון · פתוח לכלל הציבור</p>
-        <h1>מרשם המאמנים הלאומי</h1>
-        <p class="hero__lead">
-          בדיקה אם מאמנ/ת רשומ/ה במרשם, ובאילו ענפי ספורט ודרגות.
-        </p>
+        <h1>ברוכים הבאים למרשם המאמנים הלאומי</h1>
+
+        <!-- הנתונים יושבים בהירו כדי שייראו מיד, בלי גלילה -->
+        <dl class="hero-figs" aria-label="נתוני המרשם">
+          <div class="hero-fig">
+            <dd class="hero-fig__v" id="stat-coaches">—</dd>
+            <dt class="hero-fig__l">מאמנים רשומים</dt>
+          </div>
+          <div class="hero-fig">
+            <dd class="hero-fig__v" id="stat-sports">—</dd>
+            <dt class="hero-fig__l">ענפי ספורט</dt>
+          </div>
+          <div class="hero-fig">
+            <dd class="hero-fig__v" id="stat-authorizations">—</dd>
+            <dt class="hero-fig__l">הסמכות פעילות</dt>
+          </div>
+        </dl>
       </div>
     </section>
 
@@ -73,7 +84,7 @@
           <button class="tab" role="tab" type="button" id="tab-name" data-icon="user" data-icon-size="18"
                   aria-selected="true" aria-controls="panel-name" tabindex="0">חיפוש לפי שם</button>
           <button class="tab" role="tab" type="button" id="tab-id" data-icon="doc" data-icon-size="18"
-                  aria-selected="false" aria-controls="panel-id" tabindex="-1">חיפוש לפי מזהה</button>
+                  aria-selected="false" aria-controls="panel-id" tabindex="-1">חיפוש לפי תעודת זהות</button>
         </div>
 
         <!-- ---------- מסלול א׳ — לפי שם ---------- -->
@@ -101,66 +112,28 @@
           </form>
         </div>
 
-        <!-- ---------- מסלול ב׳ — לפי מזהה ---------- -->
+        <!-- ---------- מסלול ב׳ — לפי תעודת זהות בלבד ----------
+             טלפון ודוא"ל אינם מסלולי חיפוש: הם משמשים לסינון תוצאות
+             בלבד, ולכן הם יושבים בעמודת הסינון שליד התוצאות. -->
         <div role="tabpanel" id="panel-id" aria-labelledby="tab-id" tabindex="0" hidden>
           <form id="form-id" novalidate>
             <div class="srow">
-              <div class="field sel">
-                <label for="id-type">סוג המזהה</label>
-                <select id="id-type">
-                  <option value="id">תעודת זהות</option>
-                  <option value="mobile">טלפון נייד</option>
-                  <option value="email">דואר אלקטרוני</option>
-                </select>
-                <span class="sel__ch" data-icon="chevdown" data-icon-size="16" aria-hidden="true"></span>
-              </div>
               <div class="field">
-                <label for="identifier" id="identifier-label">מספר תעודת זהות</label>
+                <label for="identifier">מספר תעודת זהות</label>
                 <input type="text" id="identifier" autocomplete="off" inputmode="numeric"
-                       aria-describedby="identifier-hint identifier-error">
+                       maxlength="9" aria-describedby="identifier-hint identifier-error">
               </div>
               <button class="btn btn-pri btn-lg" type="submit">חיפוש</button>
             </div>
 
             <p class="errmsg" id="identifier-error" role="alert"></p>
-            <p class="snote" id="identifier-hint"></p>
+            <p class="snote" id="identifier-hint">
+              9 ספרות, כולל ספרת ביקורת. החיפוש מדויק ומחזיר מאמן אחד לכל היותר.
+            </p>
           </form>
         </div>
 
       </section>
-    </div>
-
-    <!-- ====================================================================
-         הנתונים — סעיף 3.6
-         --------------------------------------------------------------------
-         לפני חיפוש הבלוק יושב כאן. ברגע שיש תוצאות הוא מועבר אל מתחת
-         להן (ראה placeFigures ב-app.js), כדי שלא יחצוץ בין החיפוש
-         לתוצאות שלו.
-         ==================================================================== -->
-    <div class="wrap" id="figures-slot">
-      <dl class="figures" aria-label="נתוני המרשם">
-        <div class="fig">
-          <span class="fig__ic" data-icon="user" data-icon-size="22" aria-hidden="true"></span>
-          <div>
-            <dd class="fig__v" id="stat-coaches">—</dd>
-            <dt class="fig__l">מאמנים רשומים</dt>
-          </div>
-        </div>
-        <div class="fig">
-          <span class="fig__ic" data-icon="flag" data-icon-size="22" aria-hidden="true"></span>
-          <div>
-            <dd class="fig__v" id="stat-sports">—</dd>
-            <dt class="fig__l">ענפי ספורט</dt>
-          </div>
-        </div>
-        <div class="fig">
-          <span class="fig__ic" data-icon="award" data-icon-size="22" aria-hidden="true"></span>
-          <div>
-            <dd class="fig__v" id="stat-authorizations">—</dd>
-            <dt class="fig__l">הסמכות פעילות</dt>
-          </div>
-        </div>
-      </dl>
     </div>
 
     <!-- ====================================================================
@@ -176,12 +149,25 @@
 
         <p class="sr-only" id="results-status" role="status" aria-live="polite"></p>
 
-        <div class="filt" id="filter-bar" hidden>
-          <div class="filt__head">
-            <span class="filt__t">סינון התוצאות</span>
-            <button class="btn btn-link" type="button" id="filter-clear">ניקוי הסננים</button>
-          </div>
-          <div class="filt__grid">
+        <!-- מוצג רק אחרי חיפוש לפי שם: שם לבדו אינו מזהה יחיד -->
+        <div class="notice" id="name-notice" hidden>
+          <span class="notice__ic" data-icon="info" data-icon-size="18" aria-hidden="true"></span>
+          <p>
+            <b>שים לב:</b> תוצאות החיפוש מבוססות על שם בלבד ועלולות לכלול מספר
+            מאמנים בעלי שם זהה. כדי לוודא שמדובר במאמן הספציפי שאתם מחפשים,
+            <button type="button" class="notice__cta" id="go-id">מומלץ לחפש לפי מספר תעודת זהות ›</button>
+          </p>
+        </div>
+
+        <!-- שתי עמודות: סינון מימין, תוצאות משמאל -->
+        <div class="res__body">
+
+          <aside class="filt" id="filter-bar" aria-labelledby="filt-t" hidden>
+            <div class="filt__head">
+              <h3 class="filt__t" id="filt-t">סינון לפי</h3>
+              <button class="btn btn-link" type="button" id="filter-clear">ניקוי</button>
+            </div>
+
             <div class="field sel">
               <label for="filter-sport">ענף ספורט</label>
               <select id="filter-sport"><option value="">כל הענפים</option></select>
@@ -200,23 +186,24 @@
               <label for="filter-email">דואר אלקטרוני</label>
               <input type="text" id="filter-email" autocomplete="off">
             </div>
-          </div>
-        </div>
 
-        <div class="coaches" id="results-grid"></div>
+            <p class="filt__note">
+              טלפון ודוא״ל משמשים לאיתור מדויק כשיש כמה מאמנים בעלי שם זהה,
+              ואינם מוצגים בתוצאות.
+            </p>
+          </aside>
+
+          <div class="coaches" id="results-grid"></div>
+
+        </div>
 
         <!-- Disclaimer — הנוסח הסופי יסופק על ידי הלשכה המשפטית.
-             שים לב: סעיף 3.5.1 באפיון מבקש אותו *בראש* התוצאות. הוא
-             הועבר לכאן לבקשת הלקוחה, כי בראש הרשימה הוא חוסם את הסריקה.
-             האפיון טעון עדכון בהתאם. -->
-        <div class="info" id="disclaimer">
-          <span class="info__ic" data-icon="info" data-icon-size="18" aria-hidden="true"></span>
-          <span>
-            המידע במרשם משקף את נתוני ההסמכה כפי שנרשמו במועד הפקת התצוגה, ואינו מהווה
-            אישור על כשירותו של המאמן לפעילות מסוימת. טלפון ודוא״ל משמשים לאיתור מדויק
-            כשיש כמה מאמנים בעלי שם זהה, ואינם מוצגים בתוצאות.
-          </span>
-        </div>
+             סעיף 3.5.1 מבקש אותו בראש התוצאות; הוא הועבר לכאן לבקשת
+             הלקוחה כדי לא לחסום את הסריקה. -->
+        <p class="disc" id="disclaimer">
+          המידע במרשם משקף את נתוני ההסמכה כפי שנרשמו במועד הפקת התצוגה,
+          ואינו מהווה אישור על כשירותו של המאמן לפעילות מסוימת.
+        </p>
 
       </section>
     </div>

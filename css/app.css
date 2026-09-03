@@ -190,42 +190,28 @@ body { background: var(--surface); }
 .snote { margin-top: 20px; font-size: 13px; line-height: 20px; color: var(--muted); }
 
 /* ==========================================================================
-   4. הנתונים — מספרים גדולים, בלי כרטיסים
+   4. הנתונים — בתוך ההירו, כדי שייראו בלי גלילה
    ========================================================================== */
 
-.figures {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding-block: 72px;
+.hero-figs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 48px;
+  margin-top: 34px;
 }
 
-/* כשהבלוק מועבר אל מתחת לתוצאות הוא נקרא כסיכום ולא כחוצץ:
-   קו מפריד מעליו, ומרווח עליון קטן יותר. הכלל נשען על סדר
-   האחים בפועל, ולכן אין צורך במחלקת מצב נוספת. */
-#results-slot + #figures-slot .figures {
-  border-top: 1px solid var(--line);
-  padding-block: 44px 80px;
+.hero-fig {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
-
-.fig { display: flex; align-items: flex-start; gap: 16px; }
-
-.fig__ic {
-  flex: none;
-  width: 46px; height: 46px;
-  display: grid; place-items: center;
-  border-radius: 13px;
-  background: var(--blue-l);
-  color: var(--blue);
-}
-.fig__v {
-  display: block;
-  font-size: 40px; line-height: 44px; font-weight: 600;
+.hero-fig__v {
+  font-size: 44px; line-height: 48px; font-weight: 600;
   letter-spacing: -.02em;
-  color: var(--ink-strong);
+  color: #fff;
   font-variant-numeric: tabular-nums;
 }
-.fig__l { display: block; margin-top: 3px; font-size: 15px; line-height: 22px; color: var(--ink-soft); }
+.hero-fig__l { font-size: 15px; line-height: 22px; color: #C6DAF3; }
 
 /* ==========================================================================
    5. תוצאות
@@ -233,7 +219,16 @@ body { background: var(--surface); }
 
 /* מרווח עליון נדרש כאן: עד שהנתונים הועברו למטה הם היו מפרידים
    בין כרטיס החיפוש לתוצאות, ובלעדיהם הכותרת נצמדה לקצה הכרטיס. */
-.res { padding-block: 64px 56px; }
+.res { padding-block: 64px 72px; }
+
+/* סינון מימין, תוצאות משמאל — כמו במרשמי משרד הבריאות.
+   העמודה צרה וקבועה כדי שרוחב הכרטיסים יישאר יציב. */
+.res__body {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 28px;
+  align-items: start;
+}
 
 .res__head {
   display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
@@ -259,24 +254,58 @@ body { background: var(--surface); }
 }
 .info__ic { flex: none; display: flex; color: var(--blue); margin-top: 3px; }
 
-/* -- סינון -- */
-.filt { margin-bottom: 28px; }
-.filt__head {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; margin-bottom: 10px;
+/* -- הודעה על שמות זהים, עם הפניה לחיפוש לפי ת"ז -- */
+.notice {
+  display: flex; gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  background: #FFF8E8;
+  border: 1px solid #F2DFB4;
+  font-size: 14px; line-height: 22px;
+  color: #5C4600;
 }
-.filt__t { font-size: 14px; font-weight: 600; color: var(--ink-soft); }
-.filt__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.filt__grid .field input, .filt__grid .field select { height: 46px; }
+.notice__ic { flex: none; display: flex; color: #A97806; margin-top: 3px; }
+.notice__cta {
+  padding: 0;
+  font: inherit; font-weight: 600;
+  color: var(--link);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.notice__cta:hover { color: var(--blue); }
+
+/* -- סינון -- */
+.filt {
+  position: sticky; top: 96px;      /* נשאר גלוי בזמן גלילת התוצאות */
+  background: var(--blue-l2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px;
+  display: grid;
+  gap: 14px;
+}
+.filt__head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.filt__t { font-size: 15px; line-height: 22px; font-weight: 600; color: var(--ink-strong); }
+.filt .field input, .filt .field select { height: 44px; background: var(--surface); }
+.filt__note {
+  /* --muted נתן 4.24:1 על רקע הסינון המוגוון — מתחת ל-AA */
+  font-size: 12.5px; line-height: 18px; color: var(--ink-soft);
+  padding-top: 4px; border-top: 1px solid var(--line);
+}
 
 /* -- כרטיס מאמן -- */
-.coaches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+/* align-items ברירת המחדל (stretch) — כל הכרטיסים בשורה באותו גובה.
+   הקיפול של הענפים מעל 3 הוא מה שמאפשר את זה בלי שטח לבן מיותר. */
+.coaches { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
 
 .coach {
+  display: flex; flex-direction: column;
   border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--surface);
-  overflow: hidden;
   transition: box-shadow .16s, transform .16s, border-color .16s;
 }
 .coach:hover {
@@ -299,11 +328,6 @@ body { background: var(--surface); }
 }
 .coach__tx { min-width: 0; flex: 1; }
 .coach__n { display: block; font-size: 18px; line-height: 24px; font-weight: 600; color: var(--ink-strong); }
-.coach__id {
-  display: block; margin-top: 2px;
-  font-size: 13px; line-height: 18px; color: var(--muted);
-  font-variant-numeric: tabular-nums; white-space: nowrap;
-}
 
 .coach__cnt {
   padding: 0 20px 10px;
@@ -332,6 +356,25 @@ body { background: var(--surface); }
 /* הירוק מהקובץ (#15803d) נותן 4.22:1 על הגוון שלו — מתחת ל-AA.
    כאן הוא מוכהה; הרקע נשאר הטוקן המקורי. */
 .rank[data-rank="מאמן בכיר"] { color: #12652D; background: var(--st-appr-b); }
+
+/* -- ענפים נוספים -- */
+.coach__list--more { padding-top: 0; }
+
+/* margin-top:auto נועל את הכפתור לתחתית הכרטיס, כך שהוא מיושר
+   בין כרטיסים שבהם מספר הענפים שונה */
+.coach__more {
+  margin: auto 20px 18px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 9px 14px;
+  border-radius: 9px;
+  background: var(--blue-l2);
+  color: var(--link);
+  font-size: 13.5px; font-weight: 600;
+  transition: background .13s, color .13s;
+}
+.coach__more:hover { background: var(--blue-l); color: var(--blue); }
+.coach__more__ic { display: flex; transition: transform .15s; }
+.coach__more[aria-expanded="true"] .coach__more__ic { transform: rotate(180deg); }
 
 /* -- מצב ריק -- */
 .empty { grid-column: 1 / -1; text-align: center; padding: 56px 24px; }
@@ -400,10 +443,15 @@ body { background: var(--surface); }
   .srow { flex-direction: column; align-items: stretch; }
   .srow .btn { width: 100%; }
 
-  .figures { grid-template-columns: 1fr; gap: 22px; padding-block: 48px; }
-  .fig__v { font-size: 34px; line-height: 38px; }
 
-  .filt__grid, .coaches { grid-template-columns: 1fr; }
+  /* במסך צר הסינון חוזר להיות בלוק מעל התוצאות ולא עמודה */
+  .res__body { grid-template-columns: 1fr; gap: 20px; }
+  .filt { position: static; }
+  .coaches { grid-template-columns: 1fr; }
+
+  .hero-figs { gap: 12px 28px; margin-top: 26px; }
+  .hero-fig__v { font-size: 32px; line-height: 36px; }
+  .hero-fig__l { font-size: 13.5px; }
   .foot__grid { grid-template-columns: 1fr; gap: 26px; }
 }
 
