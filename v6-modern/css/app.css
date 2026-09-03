@@ -96,6 +96,22 @@ body { background: var(--surface); }
       rgba(8,  28, 60, .88) 100%);
 }
 
+/* איור מותאם למסך גדול: משלים את הטקסט מבלי להתחרות בו.
+   כיוון התמונה פונה פנימה, אל תוכן ההירו. */
+.hero__art {
+  position: absolute;
+  z-index: -1;
+  left: clamp(-112px, -4vw, -28px);
+  bottom: -118px;
+  width: min(51vw, 660px);
+  height: auto;
+  opacity: .9;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero__in { position: relative; z-index: 1; }
+
 /* הרוחב מוגבל על האלמנטים עצמם ולא על המיכל — הגבלת המיכל
    הייתה ממרכזת את הבלוק ומנתקת אותו מקו הסמל שבפס העליון.
    אין כאן max-width על .hero__in: הוא יושב על אותו אלמנט כמו
@@ -191,6 +207,14 @@ body { background: var(--surface); }
   padding-block: 72px;
 }
 
+/* כשהבלוק מועבר אל מתחת לתוצאות הוא נקרא כסיכום ולא כחוצץ:
+   קו מפריד מעליו, ומרווח עליון קטן יותר. הכלל נשען על סדר
+   האחים בפועל, ולכן אין צורך במחלקת מצב נוספת. */
+#results-slot + #figures-slot .figures {
+  border-top: 1px solid var(--line);
+  padding-block: 44px 80px;
+}
+
 .fig { display: flex; align-items: flex-start; gap: 16px; }
 
 .fig__ic {
@@ -214,7 +238,7 @@ body { background: var(--surface); }
    5. תוצאות
    ========================================================================== */
 
-.res { padding-bottom: 88px; }
+.res { padding-bottom: 56px; }
 
 .res__head {
   display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
