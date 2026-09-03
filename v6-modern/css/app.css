@@ -79,7 +79,12 @@ body { background: var(--surface); }
   content: "";
   position: absolute; inset: 0; z-index: -2;
   /* משטח מאויר עדין: עומק כחול, נקודות שקופות וקשתות בקצוות. */
-  background: url("../assets/hero-gov-surface.png") center / cover no-repeat;
+  background:
+    linear-gradient(108deg,
+      rgba(29, 104, 196, .64) 0%,
+      rgba(17, 76, 160, .42) 48%,
+      rgba(3, 35, 92, .18) 100%),
+    url("../assets/hero-gov-surface.png") center / cover no-repeat;
 }
 
 /* קווי המסלול הם חלק מתמונת הרקע, ולכן אין שכבת CSS נוספת מעליה. */
