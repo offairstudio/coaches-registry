@@ -16,11 +16,6 @@
    ========================================================================== */
 
 :root {
-  /* מחליפים את הערך הזה בנתיב לתצלום כדי להחליף את הרקע:
-     --hero-art: url("../assets/hero-photo.jpg");
-     כל השאר — הכהיה, הריווח והניגודיות — כבר מוכן לתמונה. */
-  --hero-art: url("../assets/hero-sport.svg");
-
   --container-wide: 1180px;
   --sh-lift: 0 18px 44px rgba(9, 40, 88, .16);
   --sh-soft: 0 2px 10px rgba(9, 40, 88, .06);
@@ -66,8 +61,8 @@ body { background: var(--surface); }
 /* ==========================================================================
    2. ההירו
    --------------------------------------------------------------------------
-   הרקע הספורטיבי יושב מתחת לשכבת כחול, כך שהטקסט תמיד קריא —
-   וגם כשיוחלף בתצלום, הניגודיות נשמרת בלי לגעת בעיצוב.
+   רקע כחול נקי עם עומק צבע עדין. האיור דקורטיבי ונפרד מהטקסט,
+   כך שהניגודיות נשמרת והכותרת נשארת מרכזית.
    ========================================================================== */
 
 .hero {
@@ -75,25 +70,22 @@ body { background: var(--surface); }
   isolation: isolate;
   padding-block: 92px 150px;   /* המרווח התחתון פותח מקום לכרטיס החיפוש */
   color: #fff;
+  background: #123F7A;
   overflow: hidden;
 }
 
 .hero::before {
   content: "";
   position: absolute; inset: 0; z-index: -2;
-  background: var(--hero-art) center / cover no-repeat;
+  /* עומק עדין בלבד, בלי טקסטורה או קישוטים מתחרים. */
+  background: linear-gradient(110deg, #0C356A 0%, #123F7A 58%, #164985 100%);
 }
 
-/* שכבת ההכהיה — מבטיחה ניגודיות AA לטקסט מעל כל רקע */
+/* שכבה שקופה: נשמרת כעוגן שכבות לאיור, בלי להכהות את הרקע הנקי. */
 .hero::after {
   content: "";
   position: absolute; inset: 0; z-index: -1;
-  background:
-    linear-gradient(280deg,
-      rgba(10, 34, 70, 0)   0%,
-      rgba(10, 34, 70, .28) 34%,
-      rgba(9,  31, 66, .70) 66%,
-      rgba(8,  28, 60, .88) 100%);
+  background: transparent;
 }
 
 /* איור מותאם למסך גדול: משלים את הטקסט מבלי להתחרות בו.
@@ -101,11 +93,11 @@ body { background: var(--surface); }
 .hero__art {
   position: absolute;
   z-index: -1;
-  left: clamp(-112px, -4vw, -28px);
-  bottom: -118px;
+  left: clamp(-66px, -2vw, -18px);
+  bottom: -94px;
   width: min(51vw, 660px);
   height: auto;
-  opacity: .9;
+  opacity: 1;
   pointer-events: none;
   user-select: none;
 }
@@ -249,10 +241,11 @@ body { background: var(--surface); }
 .res__count { font-size: 15px; color: var(--ink-soft); }
 .res__count strong { color: var(--ink-strong); font-variant-numeric: tabular-nums; }
 
+/* יושב אחרי רשת התוצאות ולכן המרווח מעליו ולא מתחתיו */
 .info {
   display: flex; gap: 14px;
   padding: 16px 18px;
-  margin-bottom: 26px;
+  margin-top: 32px;
   border-radius: 12px;
   background: var(--blue-l2);
   border: 1px solid #DDEAFB;

@@ -48,7 +48,7 @@
          ==================================================================== -->
     <section class="hero">
       <!-- דקורטיבי בלבד: האיור מוסיף הקשר של מאמן מוסמך, ללא מידע חיוני. -->
-      <img class="hero__art" src="assets/coach-registry-hero.png" alt="" aria-hidden="true">
+      <img class="hero__art" src="assets/coach-registry-hero-v2.png" alt="" aria-hidden="true">
       <div class="wrap hero__in">
         <p class="kicker" data-icon="shield" data-icon-size="16">שירות מקוון · פתוח לכלל הציבור</p>
         <h1>מרשם המאמנים הלאומי</h1>
@@ -176,16 +176,6 @@
 
         <p class="sr-only" id="results-status" role="status" aria-live="polite"></p>
 
-        <!-- Disclaimer — הנוסח הסופי יסופק על ידי הלשכה המשפטית -->
-        <div class="info" id="disclaimer">
-          <span class="info__ic" data-icon="info" data-icon-size="18" aria-hidden="true"></span>
-          <span>
-            המידע במרשם משקף את נתוני ההסמכה כפי שנרשמו במועד הפקת התצוגה, ואינו מהווה
-            אישור על כשירותו של המאמן לפעילות מסוימת. טלפון ודוא״ל משמשים לאיתור מדויק
-            כשיש כמה מאמנים בעלי שם זהה, ואינם מוצגים בתוצאות.
-          </span>
-        </div>
-
         <div class="filt" id="filter-bar" hidden>
           <div class="filt__head">
             <span class="filt__t">סינון התוצאות</span>
@@ -214,6 +204,19 @@
         </div>
 
         <div class="coaches" id="results-grid"></div>
+
+        <!-- Disclaimer — הנוסח הסופי יסופק על ידי הלשכה המשפטית.
+             שים לב: סעיף 3.5.1 באפיון מבקש אותו *בראש* התוצאות. הוא
+             הועבר לכאן לבקשת הלקוחה, כי בראש הרשימה הוא חוסם את הסריקה.
+             האפיון טעון עדכון בהתאם. -->
+        <div class="info" id="disclaimer">
+          <span class="info__ic" data-icon="info" data-icon-size="18" aria-hidden="true"></span>
+          <span>
+            המידע במרשם משקף את נתוני ההסמכה כפי שנרשמו במועד הפקת התצוגה, ואינו מהווה
+            אישור על כשירותו של המאמן לפעילות מסוימת. טלפון ודוא״ל משמשים לאיתור מדויק
+            כשיש כמה מאמנים בעלי שם זהה, ואינם מוצגים בתוצאות.
+          </span>
+        </div>
 
       </section>
     </div>
