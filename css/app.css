@@ -368,9 +368,22 @@ body { background: var(--surface); }
 @media (max-width: 760px) {
   .wrap, .govbar__in { padding-inline: 18px; }
 
-  /* "יצירת קשר" יורד מהפס — הוא קיים בפוטר, והרוחב דרוש
-     לסמל המשרד ולכפתור הרישום */
-  .govbar__nav .btn-out { display: none; }
+  /* "יצירת קשר" נשאר בפס אבל מצטמצם לאייקון בלבד: הרוחב דרוש
+     לסמל המשרד ולכפתור הרישום, והקישור עצמו עדיין נחוץ.
+     התווית יורדת מהתצוגה אך נשארת בעץ הנגישות, ולכן קורא מסך
+     עדיין מקריא "יצירת קשר" ואין צורך ב-aria-label נפרד. */
+  .govbar__nav .btn { height: 44px; }            /* יעד מגע תקני */
+  .govbar__contact {
+    position: relative;
+    width: 44px; padding-inline: 0; gap: 0;
+    justify-content: center;
+  }
+  .govbar__contact .btn__t {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
   .brand__wm, .brand__div { display: none; }
 
   .hero { padding-block: 56px 120px; }
