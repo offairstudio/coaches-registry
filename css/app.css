@@ -97,10 +97,12 @@ body { background: var(--surface); }
 .hero__art {
   position: absolute;
   z-index: -1;
-  /* הסטה פנימה כך שהחלק התחתון נבלע מאחורי כרטיס החיפוש. */
-  left: clamp(74px, 6vw, 108px);
-  top: 14px;
-  width: min(46vw, 580px);
+  /* המיקום והגודל נבחרו על הקנבס בלוח ברוחב 1240px (70/30/617).
+     הביטויים הרספונסיביים מכוילים כך שברוחב הזה הם נוחתים עליהם
+     בדיוק, וממשיכים להתנהג נכון מעליו ומתחתיו. */
+  left: clamp(56px, 5.65vw, 100px);
+  top: 30px;
+  width: min(49.8vw, 640px);
   height: auto;
   opacity: 1;
   pointer-events: none;
