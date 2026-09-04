@@ -68,8 +68,9 @@ body { background: var(--surface); }
 .hero {
   position: relative;
   isolation: isolate;
-  /* גובה נוסף מאפשר לאיור להשלים את ההירו, בלי שכרטיס החיפוש יחתוך אותו. */
-  padding-block: 92px 202px;
+  /* התחתית רחבה מהראש: היא נושאת גם את חפיפת כרטיס החיפוש (104px)
+     וגם את האוויר שמתחת לנתונים, כדי שהתחתית לא תרגיש דחוסה. */
+  padding-block: 92px 240px;
   color: #fff;
   background: #123F7A;
   overflow: hidden;
@@ -97,13 +98,38 @@ body { background: var(--surface); }
 .hero__art {
   position: absolute;
   z-index: -1;
-  /* המיקום והגודל נבחרו על הקנבס בלוח ברוחב 1240px (70/30/617).
-     הביטויים הרספונסיביים מכוילים כך שברוחב הזה הם נוחתים עליהם
-     בדיוק, וממשיכים להתנהג נכון מעליו ומתחתיו. */
-  left: clamp(56px, 5.65vw, 100px);
-  top: 30px;
-  width: min(49.8vw, 640px);
+  /* המיקום נבחר על הקנבס בלוח ברוחב 1240px: 53px מקצה המיכל,
+     35px מראש ההירו.
+
+     שני עוגנים, ולכל אחד תפקיד אחר:
+
+     --art-left  מצמיד את האיור למיכל התוכן ולא לחלון. המיכל הוא
+       1180px שמתמרכז, כלומר קצהו יושב ב-calc(50% - 590px);
+       53px פנימה משם נותנים 537px. כך כשהמסך מתרחב האיור נע
+       יחד עם הכותרת במקום להיסחף ממנה. ה-max שומר עליו בתוך
+       המסך כשהחלון צר מהמיכל.
+
+     --art-right הוא הקו שאסור לאיור לעבור. הרוחב הוא המרחק בין
+       שני העוגנים, ולכן בהצרת המסך האיור מתכווץ במקום לרוץ אל
+       הכותרת. יש בו שתי תקרות, כי לכותרת שתי התנהגויות שונות:
+         · מעל 1180 המיכל קפוא ומתמרכז, ולכן הכותרת נעה עם המרכז —
+           calc(50% + 80px) עוקב אחריה ושומר מרווח קבוע.
+         · מתחת ל-1180 המיכל נמתח לרוחב המסך והכותרת מתקרבת
+           למרכז; שם 57% תופס והוא זה שמכווץ את האיור.
+       בלי התקרה השנייה האיור התנגש בכותרת ב-820 וב-900 פיקסלים.
+       ה-640px הוא תקרת גודל שלא נותנת לו לגדול מעבר לנבחר. */
+  --art-left:  max(24px, calc(50% - 537px));
+  --art-right: min(calc(50% + 80px), 57%);
+
+  left: var(--art-left);
+  width: min(640px, calc(var(--art-right) - var(--art-left)));
   height: auto;
+
+  /* מעוגן לתחתית ולא לראש. עם top קבוע, ככל שהאיור מתכווץ במסך
+     צר הרגליים "עולות" והדמות מרחפת באוויר — ב-900px היא ריחפה
+     42px מעל הכרטיס. כרטיס החיפוש עולה 104px לתוך ההירו, ולכן
+     76px מהתחתית מניחים את הרגליים 28px מאחוריו בכל רוחב. */
+  bottom: 76px;
   opacity: 1;
   pointer-events: none;
   user-select: none;
@@ -377,6 +403,18 @@ body { background: var(--surface); }
 .coach__more:hover { background: var(--blue-l); color: var(--blue); }
 .coach__more__ic { display: flex; transition: transform .15s; }
 .coach__more[aria-expanded="true"] .coach__more__ic { transform: rotate(180deg); }
+
+/* -- ההבהרה המשפטית --
+   נשארה בלי כלל CSS כשאזור התוצאות נבנה מחדש והמחלקה השתנתה,
+   ולכן ירשה את גודל הגוף (16/26) ונצמדה לרשת התוצאות. */
+.disc {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 13px; line-height: 20px;
+  color: var(--ink-soft);
+  max-width: 90ch;
+}
 
 /* -- מצב ריק -- */
 .empty { grid-column: 1 / -1; text-align: center; padding: 56px 24px; }
