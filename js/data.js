@@ -143,6 +143,32 @@ const MOCK_RECORDS = [
       { businessType: "כדורגל", rank: "מאמן" },
       { businessType: "אתלטיקה קלה", rank: "מאמן בכיר" }
     ]
+  },
+  {
+    FirstName: "אורית", LastName: "שרעבי",
+    Id_Number__pc: "215608473", PersonMobilePhone: "0542156084", PersonEmail: "orit.sharabi@sport.org.il",
+    authorizations: [
+      { businessType: "אתלטיקה קלה", rank: "מאמן בכיר" },
+      { businessType: "כדורסל", rank: "מאמן" },
+      { businessType: "כדורעף", rank: "מאמן" },
+      { businessType: "שחייה", rank: "מאמן בכיר" },
+      { businessType: "התעמלות מכשירים", rank: "מאמן" },
+      { businessType: "כדוריד", rank: "מאמן" },
+      { businessType: "טניס שולחן", rank: "מאמן" },
+      { businessType: "כדורגל", rank: "מאמן" }
+    ]
+  },
+  {
+    FirstName: "גיא", LastName: "ברקוביץ׳",
+    Id_Number__pc: "347192065", PersonMobilePhone: "0503471920", PersonEmail: "guy.berkovich@walla.co.il",
+    authorizations: [
+      { businessType: "כדורגל", rank: "מאמן בכיר" },
+      { businessType: "אתלטיקה קלה", rank: "מאמן" },
+      { businessType: "כדורסל", rank: "מאמן" },
+      { businessType: "שחייה", rank: "מאמן" },
+      { businessType: "אופניים", rank: "מאמן" },
+      { businessType: "טריאתלון", rank: "מאמן בכיר" }
+    ]
   }
 ];
 
