@@ -169,6 +169,31 @@ const MOCK_RECORDS = [
       { businessType: "אופניים", rank: "מאמן" },
       { businessType: "טריאתלון", rank: "מאמן בכיר" }
     ]
+  },
+  {
+    FirstName: "דוד", LastName: "כהן",
+    Id_Number__pc: "672038514", PersonMobilePhone: "0556720385", PersonEmail: "david.cohen.pe@sport.org.il",
+    authorizations: [
+      { businessType: "אתלטיקה קלה", rank: "מאמן בכיר" },
+      { businessType: "כדורסל", rank: "מאמן" },
+      { businessType: "כדורעף", rank: "מאמן" },
+      { businessType: "שחייה", rank: "מאמן" },
+      { businessType: "כדוריד", rank: "מאמן בכיר" },
+      { businessType: "התעמלות מכשירים", rank: "מאמן" },
+      { businessType: "טניס שולחן", rank: "מאמן" },
+      { businessType: "כדורגל", rank: "מאמן" }
+    ]
+  },
+  {
+    FirstName: "דוד", LastName: "כהן",
+    Id_Number__pc: "091847362", PersonMobilePhone: "0510918473", PersonEmail: "d.cohen1962@gmail.com",
+    authorizations: [
+      { businessType: "שייט", rank: "מאמן" },
+      { businessType: "חתירה", rank: "מאמן בכיר" },
+      { businessType: "גלישת רוח", rank: "מאמן" },
+      { businessType: "שחייה", rank: "מאמן" },
+      { businessType: "טריאתלון", rank: "מאמן" }
+    ]
   }
 ];
 
